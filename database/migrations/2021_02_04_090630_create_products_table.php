@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->integer('quantity');
             $table->float('discount')->default(0);
             $table->text('description')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->timestamps();
         });
     }
