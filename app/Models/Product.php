@@ -9,6 +9,13 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'size', 'price', 'quantity', 'discount', 'description', 'thumbnail'];
+
+    public function setDiscountAttribute($value)
+    {
+        $this->attributes['discount'] = (float)$value / 100;
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
