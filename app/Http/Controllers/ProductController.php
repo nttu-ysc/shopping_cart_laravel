@@ -18,6 +18,12 @@ class ProductController extends Controller
         return view('products.index', ['products' => $products]);
     }
 
+    public function admin()
+    {
+        $products = Product::aLL();
+        return view('products.admin', ['products' => $products]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

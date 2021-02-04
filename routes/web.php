@@ -18,8 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/products/admin', [ProductController::class, 'admin'])->middleware('auth');
 Route::resource('products', ProductController::class);
-Route::get('/product/admin', [ProductController::class, 'admin']);
 
 
 
