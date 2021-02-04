@@ -43,40 +43,8 @@
                     </div>
                     <!--product option-->
                     <div class="row">
-                        <div class="col-md-4">
-                            <!--product list-->
-                            <div class="product-list">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/product/1.jpg" alt="" />
-                                    </a>
-                                    <a href="#">
-                                        <img src="assets/img/product/1-alt.jpg" alt="" />
-                                    </a>
-                                    <div class="sale-label">
-                                        Sale
-                                    </div>
-                                </div>
-                                <div class="product-title">
-                                    <h5><a href="#">CROPPED SKINNY ISA JEANS</a></h5>
-                                </div>
-                                <div class="product-price">
-                                    <del>$79.00</del> $59.99
-                                </div>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <div class="product-btn">
-                                    <a href="#" class="btn btn-extra-small btn-dark-border  "><i
-                                            class="fa fa-shopping-cart"></i> Add to cart</a>
-                                </div>
-                            </div>
-                            <!--product list-->
-                        </div>
+                        @foreach ($products as $product)
+                        @if ($product->discount == 0)
                         <div class="col-md-4">
                             <!--product list-->
                             <div class="product-list">
@@ -89,10 +57,10 @@
                                     </a>
                                 </div>
                                 <div class="product-title">
-                                    <h5><a href="#">full sleeve cotton shirt</a></h5>
+                                    <h5><a href="#">{{$product->name}}</a></h5>
                                 </div>
                                 <div class="product-price">
-                                    $49.99
+                                    {{$product->price}}
                                 </div>
                                 <div class="product-rating">
                                     <i class="fa fa-star"></i>
@@ -108,195 +76,7 @@
                             </div>
                             <!--product list-->
                         </div>
-                        <div class="col-md-4">
-                            <!--product list-->
-                            <div class="product-list">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/product/3.jpg" alt="" />
-                                    </a>
-                                    <a href="#">
-                                        <img src="assets/img/product/3-alt.jpg" alt="" />
-                                    </a>
-                                    <div class="sale-label">
-                                        Sale
-                                    </div>
-                                </div>
-                                <div class="product-title">
-                                    <h5><a href="#">OPENWORK TRIMS DRESS</a></h5>
-                                </div>
-                                <div class="product-price">
-                                    <del>$210.00</del> $179.99
-                                </div>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half-o"></i>
-                                </div>
-                                <div class="product-btn">
-                                    <a href="#" class="btn btn-extra-small btn-dark-border  "><i
-                                            class="fa fa-shopping-cart"></i> Add to cart</a>
-                                </div>
-                            </div>
-                            <!--product list-->
-                        </div>
-                        <div class="col-md-4">
-                            <!--product list-->
-                            <div class="product-list">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/product/4.jpg" alt="" />
-                                    </a>
-                                    <a href="#">
-                                        <img src="assets/img/product/4-alt.jpg" alt="" />
-                                    </a>
-                                </div>
-                                <div class="product-title">
-                                    <h5><a href="#">full sleeve cotton t-shirt</a> </h5>
-                                </div>
-                                <div class="product-price">
-                                    $39.99
-                                </div>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half-o"></i>
-                                </div>
-                                <div class="product-btn">
-                                    <a href="#" class="btn btn-extra-small btn-dark-border  "><i
-                                            class="fa fa-shopping-cart"></i> Add to cart</a>
-                                </div>
-                            </div>
-                            <!--product list-->
-                        </div>
-                        <div class="col-md-4">
-                            <!--product list-->
-                            <div class="product-list">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/product/5.jpg" alt="" />
-                                    </a>
-                                    <a href="#">
-                                        <img src="assets/img/product/5-alt.jpg" alt="" />
-                                    </a>
-                                </div>
-                                <div class="product-title">
-                                    <h5><a href="#">SHOULDER DETAIL DRESS</a></h5>
-                                </div>
-                                <div class="product-price">
-                                    $59.99
-                                </div>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <div class="product-btn">
-                                    <a href="#" class="btn btn-extra-small btn-dark-border  "><i
-                                            class="fa fa-shopping-cart"></i> Add to cart</a>
-                                </div>
-                            </div>
-                            <!--product list-->
-                        </div>
-                        <div class="col-md-4">
-                            <!--product list-->
-                            <div class="product-list">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/product/6.jpg" alt="" />
-                                    </a>
-                                    <a href="#">
-                                        <img src="assets/img/product/6-alt.jpg" alt="" />
-                                    </a>
-                                </div>
-                                <div class="product-title">
-                                    <h5><a href="#">SLEEVE COTTON SWEAT SHIRT</a></h5>
-                                </div>
-                                <div class="product-price">
-                                    $69.99
-                                </div>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half-o"></i>
-                                </div>
-                                <div class="product-btn">
-                                    <a href="#" class="btn btn-extra-small btn-dark-border  "><i
-                                            class="fa fa-shopping-cart"></i> Add to cart</a>
-                                </div>
-                            </div>
-                            <!--product list-->
-                        </div>
-                        <div class="col-md-4">
-                            <!--product list-->
-                            <div class="product-list">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/product/7.jpg" alt="" />
-                                    </a>
-                                    <a href="#">
-                                        <img src="assets/img/product/7-alt.jpg" alt="" />
-                                    </a>
-                                </div>
-                                <div class="product-title">
-                                    <h5><a href="#">CROPPED SKINNY ISA JEANS</a></h5>
-                                </div>
-                                <div class="product-price">
-                                    $59.99
-                                </div>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <div class="product-btn">
-                                    <a href="#" class="btn btn-extra-small btn-dark-border  "><i
-                                            class="fa fa-shopping-cart"></i> Add to cart</a>
-                                </div>
-                            </div>
-                            <!--product list-->
-                        </div>
-                        <div class="col-md-4">
-                            <!--product list-->
-                            <div class="product-list">
-                                <div class="product-img">
-                                    <a href="#">
-                                        <img src="assets/img/product/8.jpg" alt="" />
-                                    </a>
-                                    <a href="#">
-                                        <img src="assets/img/product/8-alt.jpg" alt="" />
-                                    </a>
-                                </div>
-                                <div class="product-title">
-                                    <h5><a href="#">full sleeve cotton shirt</a></h5>
-                                </div>
-                                <div class="product-price">
-                                    $49.99
-                                </div>
-                                <div class="product-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <div class="product-btn">
-                                    <a href="#" class="btn btn-extra-small btn-dark-border  "><i
-                                            class="fa fa-shopping-cart"></i> Add to cart</a>
-                                </div>
-                            </div>
-                            <!--product list-->
-                        </div>
+                        @else
                         <div class="col-md-4">
                             <!--product list-->
                             <div class="product-list">
@@ -312,17 +92,17 @@
                                     </div>
                                 </div>
                                 <div class="product-title">
-                                    <h5><a href="#">OPENWORK TRIMS DRESS</a></h5>
+                                    <h5><a href="#">{{$product->name}}</a></h5>
                                 </div>
                                 <div class="product-price">
-                                    <del>$220.00</del> $179.99
+                                    <del>{{$product->price}}</del> {{$product->price*$product->discount}}
                                 </div>
                                 <div class="product-rating">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
                                 </div>
                                 <div class="product-btn">
                                     <a href="#" class="btn btn-extra-small btn-dark-border  "><i
@@ -331,6 +111,10 @@
                             </div>
                             <!--product list-->
                         </div>
+                        @endif
+                        @endforeach
+
+
 
                         <div class="text-center col-md-12">
                             <ul class="pagination custom-pagination">
