@@ -71,10 +71,7 @@
                                 <span> Size </span>
                                 <span>
                                     <select class="form-control">
-                                        <option>S</option>
-                                        <option>M</option>
-                                        <option>L</option>
-                                        <option>XL</option>
+                                        <option>{{$product->size}}</option>
                                     </select>
                                 </span>
                             </li>

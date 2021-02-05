@@ -18,7 +18,7 @@
 @section('content')
 <div class="clearfix mb-3">
     <div class="toolbox float-right">
-        <a href="/products/{{$product->id}}" type="button" class="btn btn-secondary">Edit</a>
+        <a href="/products/{{$product->id}}/edit" type="button" class="btn btn-secondary">Edit</a>
         <button class="btn btn-danger">Delete</button>
     </div>
 </div>

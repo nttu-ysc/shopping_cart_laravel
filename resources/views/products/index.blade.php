@@ -50,10 +50,7 @@
                             <div class="product-list">
                                 <div class="product-img">
                                     <a href="/products/{{$product->id}}">
-                                        <img src="assets/img/product/2.jpg" alt="" />
-                                    </a>
-                                    <a href="/products/{{$product->id}}">
-                                        <img src="assets/img/product/2-alt.jpg" alt="" />
+                                        <img src="{{$product->thumbnail}}" alt="" />
                                     </a>
                                 </div>
                                 <div class="product-title">
@@ -82,10 +79,7 @@
                             <div class="product-list">
                                 <div class="product-img">
                                     <a href="/products/{{$product->id}}">
-                                        <img src="assets/img/product/1.jpg" alt="" />
-                                    </a>
-                                    <a href="/products/{{$product->id}}">
-                                        <img src="assets/img/product/1-alt.jpg" alt="" />
+                                        <img src="{{$product->thumbnail}}" alt="" />
                                     </a>
                                     <div class="sale-label">
                                         Sale
