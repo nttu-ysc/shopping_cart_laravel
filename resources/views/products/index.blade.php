@@ -49,15 +49,15 @@
                             <!--product list-->
                             <div class="product-list">
                                 <div class="product-img">
-                                    <a href="#">
+                                    <a href="/products/{{$product->id}}">
                                         <img src="assets/img/product/2.jpg" alt="" />
                                     </a>
-                                    <a href="#">
+                                    <a href="/products/{{$product->id}}">
                                         <img src="assets/img/product/2-alt.jpg" alt="" />
                                     </a>
                                 </div>
                                 <div class="product-title">
-                                    <h5><a href="#">{{$product->name}}</a></h5>
+                                    <h5><a href="/products/{{$product->id}}">{{$product->name}}</a></h5>
                                 </div>
                                 <div class="product-price">
                                     {{$product->price}}
@@ -81,10 +81,10 @@
                             <!--product list-->
                             <div class="product-list">
                                 <div class="product-img">
-                                    <a href="#">
+                                    <a href="/products/{{$product->id}}">
                                         <img src="assets/img/product/1.jpg" alt="" />
                                     </a>
-                                    <a href="#">
+                                    <a href="/products/{{$product->id}}">
                                         <img src="assets/img/product/1-alt.jpg" alt="" />
                                     </a>
                                     <div class="sale-label">
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                                 <div class="product-title">
-                                    <h5><a href="#">{{$product->name}}</a></h5>
+                                    <h5><a href="/products/{{$product->id}}">{{$product->name}}</a></h5>
                                 </div>
                                 <div class="product-price">
                                     <del>{{$product->price}}</del> {{round($product->price*$product->discount)}}

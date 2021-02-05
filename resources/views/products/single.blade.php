@@ -29,17 +29,7 @@
                                 <ul class="slides">
                                     <li data-thumb="assets/img/product/8.jpg">
                                         <a href="javascript:;" title="Freshness Photo">
-                                            <img src="assets/img/product/8.jpg" alt="" />
-                                        </a>
-                                    </li>
-                                    <li data-thumb="assets/img/product/7.jpg">
-                                        <a href="javascript:;" title="Awesome Lightbox">
-                                            <img src="assets/img/product/7.jpg" alt="" />
-                                        </a>
-                                    </li>
-                                    <li data-thumb="assets/img/product/6.jpg">
-                                        <a href="javascript:;" title="Massive UI Components">
-                                            <img src="assets/img/product/6.jpg" alt="" />
+                                            <img src="{{$product->thumbnail}}" alt="" />
                                         </a>
                                     </li>
                                 </ul>
@@ -49,25 +39,29 @@
                 </div>
                 <div class="col-md-7">
                     <div class="product-title">
-                        <h2 class="text-uppercase">Pellentesque Habitant</h2>
+                        <h2 class="text-uppercase">{{$product->name}}</h2>
                     </div>
 
                     <div class="product-price txt-xl">
-                        <span class="border-tb p-tb-10"> $179.99 <del>$279.00</del></span>
+                        @if ($product->discount)
+                        <span class="border-tb p-tb-10">$${{round($product->price*$product->discount)}}
+                            <del>{{$product->price}}</del></span>
+                        @else
+                        <span class="border-tb p-tb-10">$${{$product->price}}</span>
+                        @endif
                     </div>
 
                     <ul class="portfolio-meta m-bot-10 m-top-10">
                         <li><span> Item No </span> 09087</li>
                         <li><span> Condition </span> New</li>
+                        <li><span> Max Quantity </span> {{$product->quantity}}</li>
                     </ul>
                     <p>
-                        Phasellus fringilla suscipit risus nec eleifend. Pellentesque eu quam sem, ac malesuada leo sem
-                        quam pellente. Awesome sliders give you the opportunity to showcase your content. Advanced theme
-                        options panel to easily customize your website.
+                        {{$product->description}}
                     </p>
 
                     <ul class="portfolio-meta m-bot-10 stock">
-                        <li><span><strong class="number-item"> 390</strong> Item </span> <span class="status">In
+                        <li><span><span class="status">In
                                 Stock</span>
                         </li>
                     </ul>
@@ -90,7 +84,7 @@
                                 <label>Quantity</label>
                             </li>
                             <li>
-                                <input id="demo0" type="text" value="0" name="demo0" data-bts-min="0" data-bts-max="100"
+                                <input id="demo0" type="text" value="0" name="demo0" data-bts-min="0" data-bts-max="{{$product->quantity}}"
                                     data-bts-init-val="" data-bts-step="1" data-bts-decimal="0"
                                     data-bts-step-interval="100" data-bts-force-step-divisibility="round"
                                     data-bts-step-interval-delay="500" data-bts-prefix="" data-bts-postfix=""
