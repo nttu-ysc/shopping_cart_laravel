@@ -5,7 +5,7 @@
             <nav class="menuzord js-primary-navigation" role="navigation" aria-label="Primary Navigation">
 
                 <!--logo start-->
-                <a href="index.html" class="logo-brand">
+                <a href="/" class="logo-brand">
                     <img class="retina" src="/assets/img/logo.png" alt="Massive">
                 </a>
                 <!--logo end-->

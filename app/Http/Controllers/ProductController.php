@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,10 +44,10 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProduct $request)
     {
+        $request->validate(['thumbnail' => 'required']);
         $product = new Product;
-
         if ($request->file('thumbnail')) {
             $path = $request->file('thumbnail')->store('public');
             $path = str_replace('public/', '/storage/', $path);
@@ -95,7 +96,7 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(StoreProduct $request, Product $product)
     {
         if ($request->file('thumbnail')) {
             $product->thumbnail = str_replace('/storage/', 'public/', $product->thumbnail);
