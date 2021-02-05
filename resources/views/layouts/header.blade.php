@@ -88,6 +88,31 @@
                             </form>
                         </div>
                     </li>
+                    @auth
+                    <li>
+                        <a class="nav-link">{{Auth::user()->name}}</a>
+                        <ul class="dropdown">
+                            <li>
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                                                this.closest('form').submit();">Log
+                                        Out</a>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                    @else
+                    <li>
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Login</a>
+                    </li>
+
+                    @if (Route::has('register'))
+                    <li>
+                        <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
+                    </li>
+                    @endif
+                    @endauth
                 </ul>
                 <!--mega menu end-->
 

@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ProductController::class, 'index']);
 
 Route::get('/products/admin', [ProductController::class, 'admin'])->middleware('auth');
 Route::resource('products', ProductController::class);
