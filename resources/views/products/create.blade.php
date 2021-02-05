@@ -14,13 +14,14 @@
 @endsection
 
 @section('content')
-<form method="POST" action="/products">
+<form method="POST" action="/products" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
         <label>Product name</label>
         <input class="form-control" name="name">
     </div>
     <div class="form-group">
+        <label>Thumbnail</label>
         <div class="custom-file">
             <input type="file" class="custom-file-input" id="customFile" name="thumbnail">
             <label class="custom-file-label" for="customFile">Choose file</label>

@@ -44,6 +44,13 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = new Product;
+
+        if ($request->file('thumbnail')) {
+            $path = $request->file('thumbnail')->store('public');
+            $path = str_replace('public/', '/storage/', $path);
+            $product->thumbnail = $path;
+        }
+
         $product->fill($request->all());
         $product->user_id = Auth::id();
         $product->save();

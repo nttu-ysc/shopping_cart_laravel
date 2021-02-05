@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'size', 'price', 'quantity', 'discount', 'description', 'thumbnail'];
+    protected $fillable = ['name', 'size', 'price', 'quantity', 'discount', 'description'];
 
     public function setDiscountAttribute($value)
     {
