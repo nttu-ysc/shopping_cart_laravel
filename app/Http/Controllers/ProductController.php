@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -83,7 +84,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('products.edit', ['product' => $product]);
     }
 
     /**
@@ -95,7 +96,18 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        if ($request->file('thumbnail')) {
+            $product->thumbnail = str_replace('/storage/', 'public/', $product->thumbnail);
+            Storage::delete($product->thumbnail);
+
+            $path = $request->file('thumbnail')->store('public');
+            $path = str_replace('public/', '/storage/', $path);
+            $product->thumbnail = $path;
+        }
+
+        $product->fill($request->all());
+        $product->save();
+        return redirect('products.admin');
     }
 
     /**
