@@ -57,6 +57,13 @@ class ProductController extends Controller
         return redirect('/products/admin');
     }
 
+    public function showByAdmin($id)
+    {
+        $product = Product::find($id);
+        $discount = $product->discount * 100;
+        return view('products.showByAdmin', ['product' => $product, 'discount' => $discount]);
+    }
+
     /**
      * Display the specified resource.
      *
