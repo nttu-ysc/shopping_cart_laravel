@@ -118,6 +118,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->thumbnail = str_replace('/storage/', 'public/', $product->thumbnail);
+        Storage::delete($product->thumbnail);
+        $product->delete();
     }
 }

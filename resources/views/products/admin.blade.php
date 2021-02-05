@@ -32,7 +32,7 @@
             <div class="toolbox">
                 <a href="/products/show/{{$product->id}}" type="button" class="btn btn-primary">See More</a>
                 <a href="/products/{{$product->id}}/edit" type="button" class="btn btn-secondary">Edit</a>
-                <button class="btn btn-danger">Delete</button>
+                <button class="btn btn-danger" onclick="deleteProduct({{$product->id}})">Delete</button>
             </div>
         </div>
     </div>

@@ -19,7 +19,7 @@
 <div class="clearfix mb-3">
     <div class="toolbox float-right">
         <a href="/products/{{$product->id}}/edit" type="button" class="btn btn-secondary">Edit</a>
-        <button class="btn btn-danger">Delete</button>
+        <button class="btn btn-danger" onclick="deleteProduct({{$product->id}})">Delete</button>
     </div>
 </div>
 <ul class="list-group mb-3">
