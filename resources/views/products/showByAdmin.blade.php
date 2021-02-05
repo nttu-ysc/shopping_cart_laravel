@@ -26,8 +26,14 @@
     <li class="list-group-item active">Title: {{$product->name}}</li>
     <li class="list-group-item">Size: {{$product->size}}</li>
     <li class="list-group-item">Price: {{$product->price}}</li>
-    <li class="list-group-item">Discount: {{$discount.'%'}}</li>
-    <li class="list-group-item">Price after discount: {{round($product->price*$product->discount)}}</li>
+    <li class="list-group-item">Discount @if ($product->discount ==0) No discount @else {{$discount.'%'}}</li> @endif
+    <li class="list-group-item">Price after discount:
+        @if ($product->discount ==0)
+        {{$product->price}}
+        @else
+        {{round($product->price*$product->discount)}}
+        @endif
+    </li>
     <li class="list-group-item">Quantity: {{$product->quantity}}</li>
     @if ($product->thumbnail)
     <li class="list-group-item">Thumbnail:
