@@ -107,7 +107,7 @@ class ProductController extends Controller
 
         $product->fill($request->all());
         $product->save();
-        return redirect('products.admin');
+        return redirect('/products/admin');
     }
 
     /**
