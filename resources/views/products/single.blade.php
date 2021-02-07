@@ -44,7 +44,7 @@
 
                     <div class="product-price txt-xl">
                         @if ($product->discount)
-                        <span class="border-tb p-tb-10">$${{round($product->price*$product->discount)}}
+                        <span class="border-tb p-tb-10">$${{$product->discountPrice()}}
                             <del>{{$product->price}}</del></span>
                         @else
                         <span class="border-tb p-tb-10">$${{$product->price}}</span>

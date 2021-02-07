@@ -89,7 +89,7 @@
                                     <h5><a href="/products/{{$product->id}}">{{$product->name}}</a></h5>
                                 </div>
                                 <div class="product-price">
-                                    <del>{{$product->price}}</del> {{round($product->price*$product->discount)}}
+                                    <del>{{$product->price}}</del> {{$product->discountPrice()}}
                                 </div>
                                 <div class="product-rating">
                                     <i class="fa fa-star"></i>

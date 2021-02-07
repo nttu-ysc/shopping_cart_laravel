@@ -31,7 +31,7 @@
         @if ($product->discount ==0)
         {{$product->price}}
         @else
-        {{round($product->price*$product->discount)}}
+        {{$product->discountPrice()}}
         @endif
     </li>
     <li class="list-group-item">Quantity: {{$product->quantity}}</li>

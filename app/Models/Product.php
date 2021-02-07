@@ -11,6 +11,11 @@ class Product extends Model
 
     protected $fillable = ['name', 'size', 'price', 'quantity', 'discount', 'description'];
 
+    public function discountPrice()
+    {
+        return round($this->price * $this->discount);
+    }
+
     public function setDiscountAttribute($value)
     {
         $this->attributes['discount'] = (float)$value / 100;
