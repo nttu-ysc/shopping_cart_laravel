@@ -12,14 +12,16 @@
 
                 <!--mega menu start-->
                 <ul class="menuzord-menu menuzord-right c-nav_s-standard">
-                    <li class="active"><a>shop</a>
+                    <li @if (request()->is('/') || request()->is('/products')) class="active @endif ">
+                        <a @if (!(request()->is('/') || request()->is('/products'))) href="/" @endif>shop</a>
                     </li>
 
                     <li class="nav-divider" aria-hidden="true"><a href="javascript:void(0)">|</a>
                     </li>
 
-                    <li class="cart-info">
-                        <a href="javascript:void(0)"><i class="fa fa-shopping-cart"></i> cart(2)</a>
+                    <li class="cart-info @if (request()->is('carts')) active @endif ">
+                        <a @if (!(request()->is('carts'))) href="/carts" @endif><i class="fa fa-shopping-cart">
+                            </i> cart(2)</a>
                         <div class="megamenu megamenu-quarter-width ">
                             <div class="megamenu-row">
                                 <div class="col12">
