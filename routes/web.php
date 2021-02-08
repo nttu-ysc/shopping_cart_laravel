@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,8 @@ Route::get('/products/admin', [ProductController::class, 'admin'])->middleware('
 Route::get('/products/show/{id}', [ProductController::class, 'showByAdmin'])->middleware('auth');
 Route::resource('products', ProductController::class);
 
-
+Route::get('/carts', [CartController::class, 'index']);
+Route::get('/carts/add/{id}', [CartController::class, 'addItemToCart']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

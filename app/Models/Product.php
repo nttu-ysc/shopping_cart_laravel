@@ -13,7 +13,11 @@ class Product extends Model
 
     public function discountPrice()
     {
-        return round($this->price * $this->discount);
+        if ($this->discount == 0) {
+            return $this->price;
+        } else {
+            return round($this->price * $this->discount);
+        }
     }
 
     public function setDiscountAttribute($value)

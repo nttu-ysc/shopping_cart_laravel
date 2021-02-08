@@ -66,9 +66,9 @@
                                     <i class="fa fa-star-half-o"></i>
                                     <i class="fa fa-star-o"></i>
                                 </div>
-                                <div class="product-btn">
-                                    <a href="#" class="btn btn-extra-small btn-dark-border  "><i
-                                            class="fa fa-shopping-cart"></i> Add to cart</a>
+                                <div class="product-btn"><a href="/carts/add/{{$product->id}}"
+                                        class="btn btn-extra-small btn-dark-border  ">
+                                        <i class="fa fa-shopping-cart"></i> Add to cart</a>
                                 </div>
                             </div>
                             <!--product list-->
@@ -98,9 +98,9 @@
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                 </div>
-                                <div class="product-btn">
-                                    <a href="#" class="btn btn-extra-small btn-dark-border  "><i
-                                            class="fa fa-shopping-cart"></i> Add to cart</a>
+                                <div class="product-btn"><a href="/carts/add/{{$product->id}}"
+                                        class="btn btn-extra-small btn-dark-border">
+                                        <i class="fa fa-shopping-cart"></i> Add to cart</a>
                                 </div>
                             </div>
                             <!--product list-->
