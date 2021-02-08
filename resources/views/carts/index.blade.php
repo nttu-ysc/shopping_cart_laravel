@@ -39,7 +39,7 @@
                             </thead>
                             <tbody>
                                 @foreach ($items as $item)
-                                <tr>
+                                <tr data-id="{{$item['item']->id}}">
                                     <td>
                                         <div class="cart-img">
                                             <a href="/products/{{$item['item']->id}}">
@@ -55,7 +55,7 @@
                                             <a href="/carts/decrease/{{$item['item']->id}}"
                                                 class="btn btn-default pull-left" style="margin-right: 0px">-</a>
                                             <input class="form-control cart-quantity" value="{{$item['quantity']}}"
-                                                style="margin-right: 0px" />
+                                                style="margin-right: 0px" required />
                                             <a href="/carts/increase/{{$item['item']->id}}"
                                                 class="btn btn-default">+</a>
                                             <a href="/carts/remove/{{$item['item']->id}}" class="btn btn-default"

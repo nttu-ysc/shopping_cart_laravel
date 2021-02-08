@@ -16,4 +16,5 @@ mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'pub
     require('tailwindcss'),
     require('autoprefixer'),
 ]).sass('resources/sass/backend.scss', 'public/css')
-    .sourceMaps();
+    .sourceMaps()
+    .js('resources/js/frontend.js', 'public/js');

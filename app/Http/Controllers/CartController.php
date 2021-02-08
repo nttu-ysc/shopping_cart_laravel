@@ -64,4 +64,12 @@ class CartController extends Controller
         $request->session()->put('cart', $cart);
         return redirect()->action([CartController::class, 'index']);
     }
+
+    public function updateQuantity(Request $request, $id)
+    {
+        $oldCart = $request->session()->get('cart', null);
+        $cart = new Cart($oldCart);
+        $cart->updateQuantity($id, $request->quantity);
+        $request->session()->put('cart', $cart);
+    }
 }

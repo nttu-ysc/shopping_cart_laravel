@@ -26,6 +26,7 @@ Route::get('/carts/add/{id}', [CartController::class, 'addItemToCart']);
 Route::get('/carts/remove/{id}', [CartController::class, 'removeItem']);
 Route::get('/carts/increase/{id}', [CartController::class, 'increaseByOne']);
 Route::get('/carts/decrease/{id}', [CartController::class, 'decreaseByOne']);
+Route::post('/carts/update/{id}',[CartController::class, 'updateQuantity']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
