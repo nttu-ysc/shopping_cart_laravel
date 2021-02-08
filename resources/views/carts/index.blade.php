@@ -52,8 +52,12 @@
                                     <td>{{$item['item']->discount}}</td>
                                     <td>
                                         <div class="cart-action">
+                                            <a href="/carts/decrease/{{$item['item']->id}}"
+                                                class="btn btn-default pull-left" style="margin-right: 0px">-</a>
                                             <input class="form-control cart-quantity" value="{{$item['quantity']}}"
                                                 style="margin-right: 0px" />
+                                            <a href="/carts/increase/{{$item['item']->id}}"
+                                                class="btn btn-default">+</a>
                                             <a href="/carts/remove/{{$item['item']->id}}" class="btn btn-default"
                                                 type="button"><i class="fa fa-trash-o"></i>
                                             </a>

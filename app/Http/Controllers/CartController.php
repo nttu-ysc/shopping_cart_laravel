@@ -46,4 +46,22 @@ class CartController extends Controller
         $request->session()->put('cart', $cart);
         return redirect()->action([CartController::class, 'index']);
     }
+
+    public function increaseByOne(Request $request, $id)
+    {
+        $oldCart = $request->session()->get('cart', null);
+        $cart = new Cart($oldCart);
+        $cart->increaseByOne($id);
+        $request->session()->put('cart', $cart);
+        return redirect()->action([CartController::class, 'index']);
+    }
+
+    public function decreaseByOne(Request $request, $id)
+    {
+        $oldCart = $request->session()->get('cart', null);
+        $cart = new Cart($oldCart);
+        $cart->decreaseByOne($id);
+        $request->session()->put('cart', $cart);
+        return redirect()->action([CartController::class, 'index']);
+    }
 }

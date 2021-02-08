@@ -24,6 +24,8 @@ Route::resource('products', ProductController::class);
 Route::get('/carts', [CartController::class, 'index']);
 Route::get('/carts/add/{id}', [CartController::class, 'addItemToCart']);
 Route::get('/carts/remove/{id}', [CartController::class, 'removeItem']);
+Route::get('/carts/increase/{id}', [CartController::class, 'increaseByOne']);
+Route::get('/carts/decrease/{id}', [CartController::class, 'decreaseByOne']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
