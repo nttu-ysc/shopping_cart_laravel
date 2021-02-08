@@ -41,10 +41,12 @@ class Cart extends Model
 
     public function increaseByOne($id)
     {
-        $this->items[$id]['quantity']++;
-        $this->items[$id]['price'] += $this->items[$id]['item']->discountPrice();
-        $this->totalQuantity++;
-        $this->totalPrice += $this->items[$id]['item']->discountPrice();
+        if ($this->items[$id]['quantity'] < $this->items[$id]['item']->quantity) {
+            $this->items[$id]['quantity']++;
+            $this->items[$id]['price'] += $this->items[$id]['item']->discountPrice();
+            $this->totalQuantity++;
+            $this->totalPrice += $this->items[$id]['item']->discountPrice();
+        }
     }
 
     public function decreaseByOne($id)
@@ -53,10 +55,11 @@ class Cart extends Model
         $this->items[$id]['price'] -= $this->items[$id]['item']->discountPrice();
         $this->totalQuantity--;
         $this->totalPrice -= $this->items[$id]['item']->discountPrice();
-        if ($this->items[$id]['quantity']==0) {
+        if ($this->items[$id]['quantity'] == 0) {
             unset($this->items[$id]);
         }
     }
+
     public function updateQuantity($id, $quantity)
     {
         if ($quantity <= $this->items[$id]['item']->quantity) {
