@@ -52,12 +52,11 @@
                                     <td>{{$item['item']->discount}}</td>
                                     <td>
                                         <div class="cart-action">
-                                            <input type="number" class="form-control cart-quantity"
-                                                value="{{$item['quantity']}}" />
-                                            <button class="btn btn-default" type="submit"><i class="fa fa-refresh"></i>
-                                            </button>
-                                            <button class="btn btn-default" type="submit"><i class="fa fa-trash-o"></i>
-                                            </button>
+                                            <input class="form-control cart-quantity" value="{{$item['quantity']}}"
+                                                style="margin-right: 0px" />
+                                            <a href="/carts/remove/{{$item['item']->id}}" class="btn btn-default"
+                                                type="button"><i class="fa fa-trash-o"></i>
+                                            </a>
                                         </div>
                                     </td>
                                     <td>{{$item['item']->discountPrice()}}

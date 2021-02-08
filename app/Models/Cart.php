@@ -39,6 +39,13 @@ class Cart extends Model
         $this->totalPrice += $item->discountPrice();
     }
 
+    public function removeItem($id)
+    {
+        $this->totalQuantity -= $this->items[$id]['quantity'];
+        $this->totalPrice -= $this->items[$id]['price'];
+        unset($this->items[$id]);
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');

@@ -23,6 +23,7 @@ Route::resource('products', ProductController::class);
 
 Route::get('/carts', [CartController::class, 'index']);
 Route::get('/carts/add/{id}', [CartController::class, 'addItemToCart']);
+Route::get('/carts/remove/{id}', [CartController::class, 'removeItem']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

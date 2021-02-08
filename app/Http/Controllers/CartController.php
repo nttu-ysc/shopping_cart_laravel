@@ -38,14 +38,12 @@ class CartController extends Controller
         return redirect('/');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Cart $cart)
+    public function removeItem(Request $request, $id)
     {
-        // 
+        $oldCart = $request->session()->get('cart', null);
+        $cart = new Cart($oldCart);
+        $cart->removeItem($id);
+        $request->session()->put('cart', $cart);
+        return redirect()->action([CartController::class, 'index']);
     }
 }

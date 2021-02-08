@@ -30,6 +30,7 @@ $totalPrice = $cart->totalPrice;
                     <li class="cart-info @if (request()->is('carts')) active @endif ">
                         <a @if (!(request()->is('carts'))) href="/carts" @endif><i class="fa fa-shopping-cart">
                             </i> cart({{count($items)}})</a>
+                        @if (!request()->is('carts'))
                         <div class="megamenu megamenu-quarter-width ">
                             <div class="megamenu-row">
                                 <div class="col12">
@@ -53,7 +54,7 @@ $totalPrice = $cart->totalPrice;
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="#" class="close">
+                                                <a href="/carts/remove/{{$item['item']->id}}" class="close">
                                                     <img src="/assets/img/product/close.png" alt="" />
                                                 </a>
                                             </td>
@@ -85,6 +86,7 @@ $totalPrice = $cart->totalPrice;
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </li>
 
                     <li>
