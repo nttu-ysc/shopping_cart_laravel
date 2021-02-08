@@ -1,3 +1,11 @@
+@php
+$oldCart = Session::has('cart') ? Session::get('cart') : null;
+$cart = new App\Models\Cart($oldCart);
+$items = $cart->items;
+$totalQuantity = $cart->totalQuantity;
+$totalPrice = $cart->totalPrice;
+@endphp
+
 <header class="l-header">
 
     <div class="l-navbar l-navbar_t-light l-navbar_expand js-navbar-sticky">
@@ -21,39 +29,29 @@
 
                     <li class="cart-info @if (request()->is('carts')) active @endif ">
                         <a @if (!(request()->is('carts'))) href="/carts" @endif><i class="fa fa-shopping-cart">
-                            </i> cart(2)</a>
+                            </i> cart({{count($items)}})</a>
                         <div class="megamenu megamenu-quarter-width ">
                             <div class="megamenu-row">
                                 <div class="col12">
 
+                                    @if ($items)
                                     <!--cart-->
+                                    @foreach ($items as $item)
                                     <table class="table cart-table-list table-responsive">
                                         <tr>
                                             <td>
-                                                <a href="#">
-                                                    <img src="/assets/img/product/1.jpg" alt="" />
+                                                <a href="/products/{{$item['item']->id}}">
+                                                    <img src="{{$item['item']->thumbnail}}" alt="" />
                                                 </a>
                                             </td>
-                                            <td><a href="#"> Women's Top</a>
+                                            <td><a href="/products/{{$item['item']->id}}">{{$item['item']->name}}</a>
                                             </td>
-                                            <td>X4</td>
-                                            <td>$ 122.00</td>
-                                            <td>
-                                                <a href="#" class="close">
-                                                    <img src="/assets/img/product/close.png" alt="" />
-                                                </a>
+                                            <td>X{{$item['quantity']}}</td>
+                                            <td>{{$item['price']}}
+                                                @if ($item['item']->discount)
+                                                <del>{{$item['item']->price*$item['quantity']}}</del> </del>
+                                                @endif
                                             </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="#">
-                                                    <img src="/assets/img/product/2.jpg" alt="" />
-                                                </a>
-                                            </td>
-                                            <td><a href="#"> Men's T-shirt</a>
-                                            </td>
-                                            <td>X4</td>
-                                            <td>$ 122.00</td>
                                             <td>
                                                 <a href="#" class="close">
                                                     <img src="/assets/img/product/close.png" alt="" />
@@ -61,21 +59,28 @@
                                             </td>
                                         </tr>
                                     </table>
+                                    @endforeach
 
                                     <div class="total-cart pull-right">
                                         <ul>
-                                            <li><span>Sub Total</span> <span>$ 2000.00 </span>
+                                            <li><span>Total Quantity</span> <span>{{$totalQuantity}} </span>
                                             </li>
-                                            <li><span>Total </span> <span>$ 2000.00 </span>
+                                            <li><span>Total </span> <span>$ {{$totalPrice}} </span>
                                             </li>
                                         </ul>
                                     </div>
                                     <div class="s-cart-btn pull-right">
-                                        <a href="shop-cart.html" class="btn btn-small btn-theme-color"> View
+                                        <a href="/carts" class="btn btn-small btn-theme-color"> View
                                             cart</a>
                                         <a href="#" class="btn btn-small btn-dark-solid"> Checkout</a>
                                     </div>
                                     <!--cart-->
+                                    @else
+                                    <div class="s-cart-btn">
+                                        <div>No item!!</div>
+                                    </div>
+                                    @endif
+
 
                                 </div>
                             </div>

@@ -16,6 +16,16 @@ class CartController extends Controller
      */
     public function index()
     {
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        return view(
+            'carts.index',
+            [
+                'items' => $cart->items,
+                'totalQuantity' => $cart->totalQuantity,
+                'totalPrice' => $cart->totalPrice
+            ]
+        );
     }
 
     public function addItemToCart($id)
