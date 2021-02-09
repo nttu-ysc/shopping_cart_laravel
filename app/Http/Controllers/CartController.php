@@ -72,4 +72,13 @@ class CartController extends Controller
         $cart->updateQuantity($id, $request->quantity);
         $request->session()->put('cart', $cart);
     }
+
+    public function addQuantity(Request $request, $id)
+    {
+        $oldCart = $request->session()->get('cart', null);
+        $cart = new Cart($oldCart);
+        $product = Product::find($id);
+        $cart->addQuantity($id, $request->quantity, $product);
+        $request->session()->put('cart', $cart);
+    }
 }

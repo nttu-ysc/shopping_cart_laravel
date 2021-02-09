@@ -62,7 +62,7 @@
 
                     <ul class="portfolio-meta m-bot-10 stock">
                         <li><span><span class="status">In
-                                Stock</span>
+                                    Stock</span>
                         </li>
                     </ul>
                     <div class="p-values">
@@ -81,13 +81,14 @@
                                 <label>Quantity</label>
                             </li>
                             <li>
-                                <input id="demo0" type="text" value="0" name="demo0" data-bts-min="0" data-bts-max="{{$product->quantity}}"
-                                    data-bts-init-val="" data-bts-step="1" data-bts-decimal="0"
-                                    data-bts-step-interval="100" data-bts-force-step-divisibility="round"
-                                    data-bts-step-interval-delay="500" data-bts-prefix="" data-bts-postfix=""
-                                    data-bts-prefix-extra-class="" data-bts-postfix-extra-class=""
-                                    data-bts-booster="true" data-bts-boostat="10" data-bts-max-boosted-step="false"
-                                    data-bts-mousewheel="true" data-bts-button-down-class="btn btn-default"
+                                <input id="demo0" type="text" value="0" name="demo0" data-bts-min="1"
+                                    data-bts-max="{{$product->quantity}}" data-bts-init-val="" data-bts-step="1"
+                                    data-bts-decimal="0" data-bts-step-interval="100"
+                                    data-bts-force-step-divisibility="round" data-bts-step-interval-delay="500"
+                                    data-bts-prefix="" data-bts-postfix="" data-bts-prefix-extra-class=""
+                                    data-bts-postfix-extra-class="" data-bts-booster="true" data-bts-boostat="10"
+                                    data-bts-max-boosted-step="false" data-bts-mousewheel="true"
+                                    data-bts-button-down-class="btn btn-default"
                                     data-bts-button-up-class="btn btn-default" />
                             </li>
 
@@ -95,7 +96,7 @@
                         </ul>
                     </div>
 
-                    <div class="clearfix">
+                    <div class="clearfix addToCart" data-id='{{$product->id}}'>
                         <a href="#" class="btn btn-medium btn-dark-solid  "><i class="fa fa-shopping-cart"></i> Add to
                             cart</a>
                     </div>

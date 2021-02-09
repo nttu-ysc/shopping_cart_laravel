@@ -15,3 +15,13 @@ $('.cart-table').on('blur', '.cart-quantity', function (e) {
             });
     }
 });
+
+$('.addToCart').on('click', function (e) {
+    var quantity = $('#demo0').val();
+    var id = $(e.currentTarget).data('id');
+    var action = '/carts/add-quantity/' + id;
+    $.post(action, { quantity: quantity })
+        .done(function (data) {
+            window.location.reload();
+        });
+});

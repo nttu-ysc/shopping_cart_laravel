@@ -60,6 +60,32 @@ class Cart extends Model
         }
     }
 
+    public function addQuantity($id, $quantity, $product)
+    {
+        if (isset($this->items[$id])) {
+            $this->items[$id]['quantity'] += $quantity;
+            $this->totalQuantity += $quantity;
+            if ($this->items[$id]['quantity'] > $product->quantity) {
+                $this->totalQuantity -= $this->items[$id]['quantity'] - $product->quantity;
+                $this->items[$id]['quantity'] = $product->quantity;
+            }
+            $this->items[$id]['price'] += $this->items[$id]['item']->discountPrice() * $this->items[$id]['quantity'];
+            $this->totalPrice += $this->items[$id]['item']->discountPrice() * $this->items[$id]['quantity'];
+        } else {
+            if ($quantity > $product->quantity) {
+                $quantity = $product->quantity;
+            }
+            $this->items[$id] =
+                [
+                    'quantity' => $quantity,
+                    'price' => $product->discountPrice() * $quantity,
+                    'item' => $product,
+                ];
+            $this->totalQuantity += $quantity;
+            $this->totalPrice += $product->discountPrice() * $quantity;
+        }
+    }
+
     public function updateQuantity($id, $quantity)
     {
         if ($quantity <= $this->items[$id]['item']->quantity) {
