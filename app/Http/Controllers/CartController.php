@@ -9,6 +9,17 @@ use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
+    protected $cart;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $oldCart = session('cart', null);
+            $this->cart = new Cart($oldCart);
+            return $next($request);
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,14 +27,12 @@ class CartController extends Controller
      */
     public function index()
     {
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
         return view(
             'carts.index',
             [
-                'items' => $cart->items,
-                'totalQuantity' => $cart->totalQuantity,
-                'totalPrice' => $cart->totalPrice
+                'items' => $this->cart->items,
+                'totalQuantity' => $this->cart->totalQuantity,
+                'totalPrice' => $this->cart->totalPrice
             ]
         );
     }
@@ -31,54 +40,42 @@ class CartController extends Controller
     public function addItemToCart($id)
     {
         $product = Product::find($id);
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-        $cart = new Cart($oldCart);
-        $cart->add($product, $id);
-        Session::put('cart', $cart);
+        $this->cart->add($product, $id);
+        Session::put('cart', $this->cart);
         return redirect('/');
     }
 
     public function removeItem(Request $request, $id)
     {
-        $oldCart = $request->session()->get('cart', null);
-        $cart = new Cart($oldCart);
-        $cart->removeItem($id);
-        $request->session()->put('cart', $cart);
+        $this->cart->removeItem($id);
+        $request->session()->put('cart', $this->cart);
         return redirect()->action([CartController::class, 'index']);
     }
 
     public function increaseByOne(Request $request, $id)
     {
-        $oldCart = $request->session()->get('cart', null);
-        $cart = new Cart($oldCart);
-        $cart->increaseByOne($id);
-        $request->session()->put('cart', $cart);
+        $this->cart->increaseByOne($id);
+        $request->session()->put('cart', $this->cart);
         return redirect()->action([CartController::class, 'index']);
     }
 
     public function decreaseByOne(Request $request, $id)
     {
-        $oldCart = $request->session()->get('cart', null);
-        $cart = new Cart($oldCart);
-        $cart->decreaseByOne($id);
-        $request->session()->put('cart', $cart);
+        $this->cart->decreaseByOne($id);
+        $request->session()->put('cart', $this->cart);
         return redirect()->action([CartController::class, 'index']);
     }
 
     public function updateQuantity(Request $request, $id)
     {
-        $oldCart = $request->session()->get('cart', null);
-        $cart = new Cart($oldCart);
-        $cart->updateQuantity($id, $request->quantity);
-        $request->session()->put('cart', $cart);
+        $this->cart->updateQuantity($id, $request->quantity);
+        $request->session()->put('cart', $this->cart);
     }
 
     public function addQuantity(Request $request, $id)
     {
-        $oldCart = $request->session()->get('cart', null);
-        $cart = new Cart($oldCart);
         $product = Product::find($id);
-        $cart->addQuantity($id, $request->quantity, $product);
-        $request->session()->put('cart', $cart);
+        $this->cart->addQuantity($id, $request->quantity, $product);
+        $request->session()->put('cart', $this->cart);
     }
 }
