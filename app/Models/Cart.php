@@ -9,11 +9,29 @@ class Cart extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'product_id', 'item', 'quantity'];
+
     public $items = [];
     public $totalQuantity = 0;
     public $totalPrice = 0;
 
-    public function __construct($oldCart)
+    public function loadUserCart($carts)
+    {
+        $this->totalQuantity = 0;
+        $this->totalPrice = 0;
+        foreach ($carts as $cart) {
+            $this->items[$cart->product_id] =
+                [
+                    'quantity' => $cart->quantity,
+                    'price' => $cart->product->discountPrice() * $cart->quantity,
+                    'item' => $cart->product,
+                ];
+            $this->totalQuantity += $cart->quantity;
+            $this->totalPrice += $cart->product->discountPrice() * $cart->quantity;
+        }
+    }
+
+    public function getItems($oldCart)
     {
         if ($oldCart) {
             $this->items = $oldCart->items;
@@ -116,6 +134,6 @@ class Cart extends Model
 
     public function product()
     {
-        return $this->belongsTo('App\Models\products');
+        return $this->belongsTo('App\Models\Product');
     }
 }

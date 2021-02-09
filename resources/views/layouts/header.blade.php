@@ -1,6 +1,12 @@
 @php
 $oldCart = Session::has('cart') ? Session::get('cart') : null;
-$cart = new App\Models\Cart($oldCart);
+$cart = new App\Models\Cart;
+$cart->getItems($oldCart);
+if (Auth::check()) {
+$carts = App\Models\Cart::where('user_id', Auth::id())->get();
+$cart->loadUserCart($carts);
+session(['cart' => $cart]);
+}
 $items = $cart->items;
 $totalQuantity = $cart->totalQuantity;
 $totalPrice = $cart->totalPrice;

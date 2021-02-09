@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
@@ -15,7 +16,8 @@ class CartController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $oldCart = session('cart', null);
-            $this->cart = new Cart($oldCart);
+            $this->cart = new Cart;
+            $this->cart->getItems($oldCart);
             return $next($request);
         });
     }
@@ -42,6 +44,7 @@ class CartController extends Controller
         $product = Product::find($id);
         $this->cart->add($product, $id);
         Session::put('cart', $this->cart);
+        $this->storeToDatabase($id);
         return redirect('/');
     }
 
@@ -49,6 +52,7 @@ class CartController extends Controller
     {
         $this->cart->removeItem($id);
         $request->session()->put('cart', $this->cart);
+        $this->storeToDatabase($id);
         return redirect()->action([CartController::class, 'index']);
     }
 
@@ -56,6 +60,7 @@ class CartController extends Controller
     {
         $this->cart->increaseByOne($id);
         $request->session()->put('cart', $this->cart);
+        $this->storeToDatabase($id);
         return redirect()->action([CartController::class, 'index']);
     }
 
@@ -63,6 +68,7 @@ class CartController extends Controller
     {
         $this->cart->decreaseByOne($id);
         $request->session()->put('cart', $this->cart);
+        $this->storeToDatabase($id);
         return redirect()->action([CartController::class, 'index']);
     }
 
@@ -70,6 +76,7 @@ class CartController extends Controller
     {
         $this->cart->updateQuantity($id, $request->quantity);
         $request->session()->put('cart', $this->cart);
+        $this->storeToDatabase($id);
     }
 
     public function addQuantity(Request $request, $id)
@@ -77,5 +84,26 @@ class CartController extends Controller
         $product = Product::find($id);
         $this->cart->addQuantity($id, $request->quantity, $product);
         $request->session()->put('cart', $this->cart);
+        $this->storeToDatabase($id);
+    }
+
+    public function storeToDatabase($id)
+    {
+        if (Auth::check()) {
+            if (!isset($this->cart->items[$id])) {
+                $cart = Cart::where('product_id', $id)->first();
+                $cart->delete();
+            }
+            foreach ($this->cart->items as $id => $item) {
+                Cart::updateOrCreate(
+                    ['item' => $item['item']->name],
+                    [
+                        'quantity' => $item['quantity'],
+                        'user_id' => Auth::id(),
+                        'product_id' => $id,
+                    ]
+                );
+            }
+        }
     }
 }
