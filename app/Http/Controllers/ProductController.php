@@ -178,4 +178,22 @@ class ProductController extends Controller
             }
         }
     }
+
+    public function search(Request $request)
+    {
+        $product = Product::where('name', $request->product)->first();
+        if ($product) {
+            return view(
+                'products.single',
+                [
+                    'product' => $product,
+                    'items' => $this->cart->items,
+                    'totalQuantity' => $this->cart->totalQuantity,
+                    'totalPrice' => $this->cart->totalPrice
+                ]
+            );
+        }else{
+            return redirect()->back()->withErrors('There is no product match.');
+        }
+    }
 }

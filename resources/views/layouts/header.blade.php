@@ -1,3 +1,9 @@
+@if (Session::has('errors'))
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    Swal.fire('There is no product match.');
+</script>
+@endif
 <header class="l-header">
 
     <div class="l-navbar l-navbar_t-light l-navbar_expand js-navbar-sticky">
@@ -84,8 +90,8 @@
                     <li>
                         <a href="javascript:void(0)"><i class="fa fa-search"></i> Search</a>
                         <div class="megamenu megamenu-quarter-width navbar-search">
-                            <form role="searchform">
-                                <input type="text" class="form-control" placeholder="Search Here">
+                            <form role="searchform" action='/products/search' method="get">
+                                <input type="text" name="product" class="form-control" placeholder="Search Here">
                             </form>
                         </div>
                     </li>

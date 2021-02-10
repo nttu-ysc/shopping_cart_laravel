@@ -19,6 +19,7 @@ Route::get('/', [ProductController::class, 'index']);
 
 Route::get('/products/admin', [ProductController::class, 'admin'])->middleware('auth');
 Route::get('/products/show/{id}', [ProductController::class, 'showByAdmin'])->middleware('auth');
+Route::get('/products/search', [ProductController::class, 'search']);
 Route::resource('products', ProductController::class);
 
 Route::get('/carts', [CartController::class, 'index']);
