@@ -25,7 +25,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $category = new Category;
+        return view('categories.create', ['category' => $category]);
     }
 
     /**
@@ -36,18 +37,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
+        $category = new Category;
+        $category->name = $request->name;
+        $category->save();
+        return redirect('/categories');
     }
 
     /**

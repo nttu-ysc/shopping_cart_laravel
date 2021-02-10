@@ -5,7 +5,7 @@
     <div class="container">
         <ol class="breadcrumb mt-3">
             <li class="breadcrumb-item"><a href="/">Home</a>
-            <li class="breadcrumb-item"><a href="/products/admin">Products List</a>
+            <li class="breadcrumb-item"><a href="/categories">Categories List</a>
             <li class="active breadcrumb-item">Create</li>
             </li>
         </ol>
@@ -15,6 +15,6 @@
 
 @section('content')
 
-    @include('layouts._form')
+    @include('categories._form')
 
 @endsection
