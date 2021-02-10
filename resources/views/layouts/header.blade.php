@@ -3,7 +3,7 @@ $oldCart = Session::has('cart') ? Session::get('cart') : null;
 $cart = new App\Models\Cart;
 $cart->getItems($oldCart);
 if (Auth::check()) {
-$carts = App\Models\Cart::where('user_id', Auth::id())->get();
+$carts = App\Models\Cart::where('user_id', Auth::id())->orderBy('product_id')->get();
 $cart->loadUserCart($carts);
 session(['cart' => $cart]);
 }

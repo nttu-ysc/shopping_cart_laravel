@@ -91,12 +91,15 @@ class CartController extends Controller
     {
         if (Auth::check()) {
             if (!isset($this->cart->items[$id])) {
-                $cart = Cart::where('product_id', $id)->first();
+                $cart = Cart::where(['product_id' => $id, 'user_id' => Auth::id()])->first();
                 $cart->delete();
             }
             foreach ($this->cart->items as $id => $item) {
                 Cart::updateOrCreate(
-                    ['item' => $item['item']->name],
+                    [
+                        'item' => $item['item']->name,
+                        'user_id' => Auth::id(),
+                    ],
                     [
                         'quantity' => $item['quantity'],
                         'user_id' => Auth::id(),
