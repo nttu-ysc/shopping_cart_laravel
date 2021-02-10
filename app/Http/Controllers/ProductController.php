@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProduct;
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,7 +63,8 @@ class ProductController extends Controller
     public function create()
     {
         $product = new Product;
-        return view('products.create', ['product' => $product]);
+        $categories = Category::all();
+        return view('products.create', ['product' => $product, 'categories' => $categories]);
     }
 
     /**
@@ -121,7 +123,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit', ['product' => $product]);
+        $categories = Category::all();
+        return view('products.edit', ['product' => $product, 'categories' => $categories]);
     }
 
     /**
@@ -192,7 +195,7 @@ class ProductController extends Controller
                     'totalPrice' => $this->cart->totalPrice
                 ]
             );
-        }else{
+        } else {
             return redirect()->back()->withErrors('There is no product match.');
         }
     }

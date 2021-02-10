@@ -32,6 +32,16 @@ $actionUrl = ($isCreate) ? '/products' : '/products/'.$product->id;
             <label class="custom-file-label" for="customFile">Choose file</label>
         </div>
     </div>
+    <label>Category</label>
+    <div class="form-group">
+        <select class="form-control" name="category_id">
+            <option selected>Please select category</option>
+            @foreach ($categories as $category)
+            <option value="{{ $category->id }}" @if ($category->id==$product->category_id) selected
+                @endif>{{$category->name}}</option>
+            @endforeach
+        </select>
+    </div>
     <label>Size</label>
     <div class="form-group">
         <select class="form-control" name="size">

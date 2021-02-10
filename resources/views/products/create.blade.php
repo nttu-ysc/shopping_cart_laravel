@@ -15,6 +15,6 @@
 
 @section('content')
 
-    @include('layouts._form')
+    @include('products._form')
 
 @endsection
