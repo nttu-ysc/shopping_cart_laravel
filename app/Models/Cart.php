@@ -14,21 +14,26 @@ class Cart extends Model
     public $items = [];
     public $totalQuantity = 0;
     public $totalPrice = 0;
+    public $loadCount = 0;
 
     public function loadUserCart($carts)
     {
-        $this->totalQuantity = 0;
-        $this->totalPrice = 0;
         foreach ($carts as $cart) {
+            if (!isset($this->items[$cart->product_id])) {
+                $this->totalQuantity += $cart->quantity;
+                $this->totalPrice += $cart->product->discountPrice() * $cart->quantity;
+            } else {
+                $this->totalQuantity +=  $cart->quantity - $this->items[$cart->product_id]['quantity'];
+                $this->totalPrice += $cart->product->discountPrice() * $cart->quantity - $this->items[$cart->product_id]['price'];
+            }
             $this->items[$cart->product_id] =
                 [
                     'quantity' => $cart->quantity,
                     'price' => $cart->product->discountPrice() * $cart->quantity,
                     'item' => $cart->product,
                 ];
-            $this->totalQuantity += $cart->quantity;
-            $this->totalPrice += $cart->product->discountPrice() * $cart->quantity;
         }
+        $this->loadCount++;
     }
 
     public function getItems($oldCart)
@@ -37,6 +42,7 @@ class Cart extends Model
             $this->items = $oldCart->items;
             $this->totalQuantity = $oldCart->totalQuantity;
             $this->totalPrice = $oldCart->totalPrice;
+            $this->loadCount = $oldCart->loadCount;
         }
     }
 

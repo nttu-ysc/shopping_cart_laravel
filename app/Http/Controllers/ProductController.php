@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProduct;
+use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,24 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
+    protected $cart;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $oldCart = session('cart', null);
+            $this->cart = new Cart;
+            $this->cart->getItems($oldCart);
+            if (Auth::check() && ($this->cart->loadCount < 1)) {
+                $carts = Cart::where('user_id', Auth::id())->orderBy('product_id')->get();
+                $this->cart->loadUserCart($carts);
+                session(['cart' => $this->cart]);
+                $this->storeToDatabase();
+            }
+            return $next($request);
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +37,15 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('products.index', ['products' => $products]);
+        return view(
+            'products.index',
+            [
+                'products' => $products,
+                'items' => $this->cart->items,
+                'totalQuantity' => $this->cart->totalQuantity,
+                'totalPrice' => $this->cart->totalPrice,
+            ]
+        );
     }
 
     public function admin()
@@ -75,7 +102,15 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('products.single', ['product' => $product]);
+        return view(
+            'products.single',
+            [
+                'product' => $product,
+                'items' => $this->cart->items,
+                'totalQuantity' => $this->cart->totalQuantity,
+                'totalPrice' => $this->cart->totalPrice
+            ]
+        );
     }
 
     /**
@@ -123,5 +158,24 @@ class ProductController extends Controller
         $product->thumbnail = str_replace('/storage/', 'public/', $product->thumbnail);
         Storage::delete($product->thumbnail);
         $product->delete();
+    }
+
+    public function storeToDatabase()
+    {
+        if (Auth::check()) {
+            foreach ($this->cart->items as $id => $item) {
+                Cart::updateOrCreate(
+                    [
+                        'item' => $item['item']->name,
+                        'user_id' => Auth::id(),
+                    ],
+                    [
+                        'quantity' => $item['quantity'],
+                        'user_id' => Auth::id(),
+                        'product_id' => $id,
+                    ]
+                );
+            }
+        }
     }
 }

@@ -1,17 +1,3 @@
-@php
-$oldCart = Session::has('cart') ? Session::get('cart') : null;
-$cart = new App\Models\Cart;
-$cart->getItems($oldCart);
-if (Auth::check()) {
-$carts = App\Models\Cart::where('user_id', Auth::id())->orderBy('product_id')->get();
-$cart->loadUserCart($carts);
-session(['cart' => $cart]);
-}
-$items = $cart->items;
-$totalQuantity = $cart->totalQuantity;
-$totalPrice = $cart->totalPrice;
-@endphp
-
 <header class="l-header">
 
     <div class="l-navbar l-navbar_t-light l-navbar_expand js-navbar-sticky">
