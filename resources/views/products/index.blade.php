@@ -8,6 +8,9 @@
             @if (request()->category)
             / {{ request()->category->name }}
             @endif
+            @if (request()->is('products/price'))
+            / price filter
+            @endif
         </h4>
         <ol class="breadcrumb">
             <li class="active">Products List</li>
@@ -157,16 +160,16 @@
                         <div class="heading-title-alt text-left heading-border-bottom">
                             <h6 class="text-uppercase">price filter</h6>
                         </div>
-                        <form method="post" action="#">
-
+                        <form method="post" action="/products/price">
+                            @csrf
                             <div class="row">
                                 <div class="col-xs-12 form-group">
-                                    <input type="text" name="price-from" id="price-from" class=" form-control"
+                                    <input type="text" name="priceFrom" id="price-from" class=" form-control"
                                         placeholder="From, $" maxlength="100">
                                 </div>
 
                                 <div class="col-xs-12 form-group">
-                                    <input type="text" name="price-to" id="price-to" class=" form-control"
+                                    <input type="text" name="priceTo" id="price-to" class=" form-control"
                                         placeholder="To, $" maxlength="100">
                                 </div>
                                 <div class=" col-xs-12 form-group">
@@ -187,7 +190,7 @@
                             <li>
                                 <div class="thumb">
                                     <a href="#">
-                                        <img src="assets/img/product/4.jpg" alt="">
+                                        <img src="/assets/img/product/4.jpg" alt="">
                                     </a>
                                 </div>
                                 <div class="w-desk">
@@ -208,7 +211,7 @@
                             <li>
                                 <div class="thumb">
                                     <a href="#">
-                                        <img src="assets/img/product/5.jpg" alt="">
+                                        <img src="/assets/img/product/5.jpg" alt="">
                                     </a>
                                 </div>
                                 <div class="w-desk">

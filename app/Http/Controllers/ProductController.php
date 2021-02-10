@@ -43,7 +43,7 @@ class ProductController extends Controller
             'products.index',
             [
                 'products' => $products,
-                'categories' =>$categories,
+                'categories' => $categories,
                 'items' => $this->cart->items,
                 'totalQuantity' => $this->cart->totalQuantity,
                 'totalPrice' => $this->cart->totalPrice,
@@ -53,7 +53,7 @@ class ProductController extends Controller
 
     public function indexWithCategory(Category $category)
     {
-        $products = Product::where('category_id',$category->id)->orderBy('id')->get();
+        $products = Product::where('category_id', $category->id)->orderBy('id')->get();
         $categories = Category::all();
         return view(
             'products.index',
@@ -216,5 +216,21 @@ class ProductController extends Controller
         } else {
             return redirect()->back()->withErrors('There is no product match.');
         }
+    }
+
+    public function priceFilter(Request $request)
+    {
+        $products = Product::where('price', '>', $request->priceFrom)->where('price', '<', $request->priceTo)->get();
+        $categories = Category::all();
+        return view(
+            'products.index',
+            [
+                'products' => $products,
+                'categories' => $categories,
+                'items' => $this->cart->items,
+                'totalQuantity' => $this->cart->totalQuantity,
+                'totalPrice' => $this->cart->totalPrice,
+            ]
+        );
     }
 }
