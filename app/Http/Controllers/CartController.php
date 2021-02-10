@@ -44,7 +44,7 @@ class CartController extends Controller
         $product = Product::find($id);
         $this->cart->add($product, $id);
         Session::put('cart', $this->cart);
-        $this->storeToDatabase($id);
+        $this->storeToDatabase();
         return redirect('/');
     }
 
@@ -52,7 +52,8 @@ class CartController extends Controller
     {
         $this->cart->removeItem($id);
         $request->session()->put('cart', $this->cart);
-        $this->storeToDatabase($id);
+        $this->storeToDatabase();
+        $this->deleteToDatabase($id);
         return redirect()->action([CartController::class, 'index']);
     }
 
@@ -60,7 +61,7 @@ class CartController extends Controller
     {
         $this->cart->increaseByOne($id);
         $request->session()->put('cart', $this->cart);
-        $this->storeToDatabase($id);
+        $this->storeToDatabase();
         return redirect()->action([CartController::class, 'index']);
     }
 
@@ -68,7 +69,8 @@ class CartController extends Controller
     {
         $this->cart->decreaseByOne($id);
         $request->session()->put('cart', $this->cart);
-        $this->storeToDatabase($id);
+        $this->storeToDatabase();
+        $this->deleteToDatabase($id);
         return redirect()->action([CartController::class, 'index']);
     }
 
@@ -76,7 +78,7 @@ class CartController extends Controller
     {
         $this->cart->updateQuantity($id, $request->quantity);
         $request->session()->put('cart', $this->cart);
-        $this->storeToDatabase($id);
+        $this->storeToDatabase();
     }
 
     public function addQuantity(Request $request, $id)
@@ -84,16 +86,12 @@ class CartController extends Controller
         $product = Product::find($id);
         $this->cart->addQuantity($id, $request->quantity, $product);
         $request->session()->put('cart', $this->cart);
-        $this->storeToDatabase($id);
+        $this->storeToDatabase();
     }
 
-    public function storeToDatabase($id)
+    public function storeToDatabase()
     {
         if (Auth::check()) {
-            if (!isset($this->cart->items[$id])) {
-                $cart = Cart::where(['product_id' => $id, 'user_id' => Auth::id()])->first();
-                $cart->delete();
-            }
             foreach ($this->cart->items as $id => $item) {
                 Cart::updateOrCreate(
                     [
@@ -107,6 +105,14 @@ class CartController extends Controller
                     ]
                 );
             }
+        }
+    }
+
+    public function deleteToDatabase($id)
+    {
+        if (!isset($this->cart->items[$id])) {
+            $cart = Cart::where(['product_id' => $id, 'user_id' => Auth::id()])->first();
+            $cart->delete();
         }
     }
 }
