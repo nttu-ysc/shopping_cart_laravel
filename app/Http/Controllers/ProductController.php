@@ -38,10 +38,28 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
+        $categories = Category::all();
         return view(
             'products.index',
             [
                 'products' => $products,
+                'categories' =>$categories,
+                'items' => $this->cart->items,
+                'totalQuantity' => $this->cart->totalQuantity,
+                'totalPrice' => $this->cart->totalPrice,
+            ]
+        );
+    }
+
+    public function indexWithCategory(Category $category)
+    {
+        $products = Product::where('category_id',$category->id)->orderBy('id')->get();
+        $categories = Category::all();
+        return view(
+            'products.index',
+            [
+                'products' => $products,
+                'categories' => $categories,
                 'items' => $this->cart->items,
                 'totalQuantity' => $this->cart->totalQuantity,
                 'totalPrice' => $this->cart->totalPrice,

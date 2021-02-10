@@ -3,7 +3,12 @@
 @section('page-title')
 <section class="page-title">
     <div class="container">
-        <h4 class="text-uppercase">Shop</h4>
+        <h4 class="text-uppercase">
+            Shop
+            @if (request()->category)
+            / {{ request()->category->name }}
+            @endif
+        </h4>
         <ol class="breadcrumb">
             <li class="active">Products List</li>
             <li><a href="#">Product</a>
@@ -139,22 +144,10 @@
                             <h6 class="text-uppercase">product category</h6>
                         </div>
                         <ul class="widget-category">
-                            <li><a href="#">Accessories</a>
+                            @foreach ($categories as $category)
+                            <li><a href="/products/category/{{ $category->id }}">{{ $category->name }}</a></li>
                             </li>
-                            <li><a href="#">Branding</a>
-                            </li>
-                            <li><a href="#">Watches</a>
-                            </li>
-                            <li><a href="#">Hats & Caps</a>
-                            </li>
-                            <li><a href="#">Shoes</a>
-                            </li>
-                            <li><a href="#">Men's Cloth</a>
-                            </li>
-                            <li><a href="#">Belts</a>
-                            </li>
-                            <li><a href="#">Kids Collection</a>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
                     <!--product category-->
