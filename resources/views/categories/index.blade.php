@@ -22,8 +22,8 @@
     <div class='clearfix'>
         <li href="#" class="list-group-item mb-1 pb-4">{{$category->name}}
             <div class="toolbox float-right">
-                <button class="btn btn-secondary">Edit</button>
-                <a href="#" class="btn btn-danger">Delete</a>
+                <a href="/categories/{{$category->id}}/edit" class="btn btn-secondary">Edit</a>
+                <button class="btn btn-danger">Delete</button>
             </div>
         </li>
     </div>

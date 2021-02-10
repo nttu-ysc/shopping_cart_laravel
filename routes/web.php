@@ -31,7 +31,7 @@ Route::get('/carts/decrease/{id}', [CartController::class, 'decreaseByOne']);
 Route::post('/carts/update/{id}', [CartController::class, 'updateQuantity']);
 Route::post('/carts/add-quantity/{id}', [CartController::class, 'addQuantity']);
 
-Route::resource('categories', CategoryController::class)->middleware('auth');
+Route::resource('categories', CategoryController::class)->except('show')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
