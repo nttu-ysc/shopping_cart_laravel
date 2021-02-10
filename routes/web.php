@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,8 @@ Route::get('/carts/increase/{id}', [CartController::class, 'increaseByOne']);
 Route::get('/carts/decrease/{id}', [CartController::class, 'decreaseByOne']);
 Route::post('/carts/update/{id}', [CartController::class, 'updateQuantity']);
 Route::post('/carts/add-quantity/{id}', [CartController::class, 'addQuantity']);
+
+Route::resource('categories', CategoryController::class)->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
