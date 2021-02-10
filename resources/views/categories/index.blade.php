@@ -23,7 +23,7 @@
         <li href="#" class="list-group-item mb-1 pb-4">{{$category->name}}
             <div class="toolbox float-right">
                 <a href="/categories/{{$category->id}}/edit" class="btn btn-secondary">Edit</a>
-                <button class="btn btn-danger">Delete</button>
+                <button class="btn btn-danger" onclick="deleteCategory({{$category->id}})">Delete</button>
             </div>
         </li>
     </div>

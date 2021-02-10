@@ -18,3 +18,14 @@ deleteProduct = function (id) {
             });
     }
 };
+
+deleteCategory = function (id) {
+    var actionUUrl = '/categories/' + id;
+    var result = confirm('Are you sure you want to delete this category?');
+    if (result) {
+        $.post(actionUUrl, { _method: 'delete' })
+            .done(function (data) {
+                location.href = '/categories';
+        })
+    }
+};
