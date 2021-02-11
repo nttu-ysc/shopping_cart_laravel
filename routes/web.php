@@ -23,6 +23,7 @@ Route::get('/products/admin', [ProductController::class, 'admin'])->middleware('
 Route::get('/products/show/{id}', [ProductController::class, 'showByAdmin'])->middleware('auth');
 Route::get('/products/search', [ProductController::class, 'search']);
 Route::get('/products/category/{category}', [ProductController::class, 'indexWithCategory']);
+Route::get('/products/tags/{tag}', [ProductController::class, 'indexWithTag']);
 Route::post('/products/price', [ProductController::class, 'priceFilter']);
 Route::resource('products', ProductController::class);
 

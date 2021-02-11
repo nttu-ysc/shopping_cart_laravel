@@ -11,6 +11,9 @@
             @if (request()->is('products/price'))
             / price filter
             @endif
+            @if (request()->tag)
+            # {{ request()->tag->name }}
+            @endif
         </h4>
         <ol class="breadcrumb">
             <li class="active">Products List</li>
@@ -240,13 +243,9 @@
                             <h6 class="text-uppercase">PRODUCT TAGS</h6>
                         </div>
                         <div class="widget-tags">
-                            <a href="">Accessories</a>
-                            <a href="">Branding</a>
-                            <a href="">Belts</a>
-                            <a href="">Cloth</a>
-                            <a href="">Kids</a>
-                            <a href="">Watch</a>
-                            <a href="">Shoes</a>
+                            @foreach ($tags as $tag)
+                            <a href="/products/tags/{{ $tag->id }}">{{ $tag->name }}</a>
+                            @endforeach
                         </div>
                     </div>
                     <!--product tags-->

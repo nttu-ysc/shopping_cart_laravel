@@ -40,11 +40,13 @@ class ProductController extends Controller
     {
         $products = Product::all();
         $categories = Category::all();
+        $tags = Tag::has('products')->withCount('products')->orderByDesc('products_count')->get();
         return view(
             'products.index',
             [
                 'products' => $products,
                 'categories' => $categories,
+                'tags' => $tags,
                 'items' => $this->cart->items,
                 'totalQuantity' => $this->cart->totalQuantity,
                 'totalPrice' => $this->cart->totalPrice,
@@ -56,11 +58,31 @@ class ProductController extends Controller
     {
         $products = Product::where('category_id', $category->id)->orderBy('id')->get();
         $categories = Category::all();
+        $tags = Tag::has('products')->withCount('products')->orderByDesc('products_count')->get();
         return view(
             'products.index',
             [
                 'products' => $products,
                 'categories' => $categories,
+                'tags' => $tags,
+                'items' => $this->cart->items,
+                'totalQuantity' => $this->cart->totalQuantity,
+                'totalPrice' => $this->cart->totalPrice,
+            ]
+        );
+    }
+
+    public function indexWithTag(Tag $tag)
+    {
+        $products = $tag->products;
+        $categories = Category::all();
+        $tags = Tag::has('products')->withCount('products')->orderByDesc('products_count')->get();
+        return view(
+            'products.index',
+            [
+                'products' => $products,
+                'categories' => $categories,
+                'tags' => $tags,
                 'items' => $this->cart->items,
                 'totalQuantity' => $this->cart->totalQuantity,
                 'totalPrice' => $this->cart->totalPrice,
