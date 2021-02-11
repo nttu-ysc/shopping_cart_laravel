@@ -17,6 +17,7 @@
     @foreach ($tags as $tag)
     <div class='clearfix'>
         <li href="#" class="list-group-item mb-1 pb-4">{{$tag->name}}
+            <span class="badge badge-primary badge-pill">{{$tag->products_count}}</span>
             <div class="toolbox float-right">
                 <button class="btn btn-danger" onclick="deleteTag({{$tag->id}})">Delete</button>
             </div>

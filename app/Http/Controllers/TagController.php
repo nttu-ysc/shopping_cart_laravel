@@ -14,7 +14,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::all();
+        $tags = Tag::withCount('products')->get();
         return view('tags.index', ['tags' => $tags]);
     }
 
