@@ -44,7 +44,8 @@ $actionUrl = ($isCreate) ? '/products' : '/products/'.$product->id;
     </div>
     <div class="form-group">
         <label>Tag</label>
-        <input class="form-control" placeholder="EX : #HAT#Taiwan#Sunday" name="tags" value="">
+        <input class="form-control" placeholder="EX : #HAT#Taiwan#Sunday" name="tags"
+            value="{{$product->tagsToString()}}">
     </div>
     <label>Size</label>
     <div class="form-group">

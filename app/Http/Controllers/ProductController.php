@@ -106,13 +106,7 @@ class ProductController extends Controller
         $product->user_id = Auth::id();
         $product->save();
 
-        $tags = explode('#', $request->tags);
-        unset($tags[0]);
-        foreach ($tags as $tag) {
-            trim($tag);
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $product->tags()->attach($tag->id);
-        }
+        $this->addTagsToProduct($request->tags, $product);
         return redirect('/products/admin');
     }
 
@@ -174,7 +168,21 @@ class ProductController extends Controller
 
         $product->fill($request->all());
         $product->save();
+
+        $product->tags()->detach();
+        $this->addTagsToProduct($request->tags, $product);
         return redirect('/products/admin');
+    }
+
+    private function addTagsToProduct($tags, $product)
+    {
+        $tags = explode('#', $tags);
+        unset($tags[0]);
+        foreach ($tags as $tag) {
+            trim($tag);
+            $tag = Tag::firstOrCreate(['name' => $tag]);
+            $product->tags()->attach($tag->id);
+        }
     }
 
     /**

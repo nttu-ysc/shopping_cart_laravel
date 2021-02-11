@@ -20,6 +20,19 @@ class Product extends Model
         }
     }
 
+    public function tagsToString()
+    {
+        $tagsName = [];
+        foreach ($this->tags as  $tag) {
+            $tagsName[] = $tag->name;
+        }
+        if ($tagsName) {
+            $tagsString = '#' . implode('#', $tagsName);
+            return $tagsString;
+        }
+
+    }
+
     public function setDiscountAttribute($value)
     {
         $this->attributes['discount'] = (float)$value / 100;
