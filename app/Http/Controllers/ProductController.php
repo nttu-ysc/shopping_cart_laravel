@@ -38,7 +38,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(9);
         $categories = Category::all();
         $tags = Tag::has('products')->withCount('products')->orderByDesc('products_count')->get();
         return view(
