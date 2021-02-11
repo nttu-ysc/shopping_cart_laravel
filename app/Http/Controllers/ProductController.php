@@ -200,8 +200,8 @@ class ProductController extends Controller
     {
         $tags = explode('#', $tags);
         unset($tags[0]);
-        foreach ($tags as $tag) {
-            trim($tag);
+        foreach ($tags as $key => $tag) {
+            $tags[$key] = trim($tag);
             $tag = Tag::firstOrCreate(['name' => $tag]);
             $product->tags()->attach($tag->id);
         }
