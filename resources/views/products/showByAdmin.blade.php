@@ -27,6 +27,9 @@
     <li class="list-group-item">
         Category: @if ($product->category){{$product->category->name}} @else No category @endif
     </li>
+    <li class="list-group-item">
+        Tags: @if ($product->tagsToString()){{$product->tagsToString()}} @else No tag @endif
+    </li>
     <li class="list-group-item">Size: {{$product->size}}</li>
     <li class="list-group-item">Price: {{$product->price}}</li>
     <li class="list-group-item">Discount @if ($product->discount ==0) No discount @else {{$discount.'%'}}</li> @endif
