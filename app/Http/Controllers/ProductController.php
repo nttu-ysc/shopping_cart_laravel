@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProduct;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -104,6 +105,14 @@ class ProductController extends Controller
         $product->fill($request->all());
         $product->user_id = Auth::id();
         $product->save();
+
+        $tags = explode('#', $request->tags);
+        unset($tags[0]);
+        foreach ($tags as $tag) {
+            trim($tag);
+            $tag = Tag::firstOrCreate(['name' => $tag]);
+            $product->tags()->attach($tag->id);
+        }
         return redirect('/products/admin');
     }
 
