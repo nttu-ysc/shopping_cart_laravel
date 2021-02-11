@@ -20,12 +20,23 @@ deleteProduct = function (id) {
 };
 
 deleteCategory = function (id) {
-    var actionUUrl = '/categories/' + id;
+    var actionUrl = '/categories/' + id;
     var result = confirm('Are you sure you want to delete this category?');
     if (result) {
-        $.post(actionUUrl, { _method: 'delete' })
+        $.post(actionUrl, { _method: 'delete' })
             .done(function (data) {
                 location.href = '/categories';
-        })
+            })
+    }
+};
+
+deleteTag = function (id) {
+    var actionUrl = '/tags/' + id;
+    var result = confirm('Are you sure you want to delete this tag?');
+    if (result) {
+        $.post(actionUrl, { _method: 'delete' })
+            .done(function (data) {
+                location.href = '/tags';
+            })
     }
 };

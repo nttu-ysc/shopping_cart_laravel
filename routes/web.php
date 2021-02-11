@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\http\Controllers\ProductController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,8 @@ Route::post('/carts/update/{id}', [CartController::class, 'updateQuantity']);
 Route::post('/carts/add-quantity/{id}', [CartController::class, 'addQuantity']);
 
 Route::resource('categories', CategoryController::class)->except('show')->middleware('auth');
+
+Route::resource('tags', TagController::class)->only('index', 'destroy')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
