@@ -71,7 +71,7 @@
                                     <div class="s-cart-btn pull-right">
                                         <a href="/carts" class="btn btn-small btn-theme-color"> View
                                             cart</a>
-                                        <a href="#" class="btn btn-small btn-dark-solid"> Checkout</a>
+                                        <a href="/orders/create" class="btn btn-small btn-dark-solid"> Checkout</a>
                                     </div>
                                     <!--cart-->
                                     @else

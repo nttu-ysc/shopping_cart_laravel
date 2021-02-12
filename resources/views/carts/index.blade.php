@@ -88,7 +88,7 @@
 
                     <div class="cart-btn-row inline-block">
                         @if ($items)
-                        <a href="#" class="btn btn-medium btn-dark-solid pull-right "><i
+                        <a href="/orders/create" method='get' class="btn btn-medium btn-dark-solid pull-right "><i
                                 class="fa fa-shopping-cart"></i> Checkout</a>
                         @endif
                         <a href="/" class="btn btn-medium btn-dark-solid btn-transparent  pull-right"> Continue Shopping

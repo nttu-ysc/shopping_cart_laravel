@@ -11,6 +11,19 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    protected $cart;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $oldCart = session('cart');
+            $this->cart = new Cart;
+            $this->cart->getItems($oldCart);
+
+            return $next($request);
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,6 +42,16 @@ class OrderController extends Controller
      */
     public function create()
     {
+        $carts = Auth::user()->carts;
+        return view(
+            'orders.create',
+            [
+                'carts' => $carts,
+                'items' => $this->cart->items,
+                'totalQuantity' => $this->cart->totalQuantity,
+                'totalPrice' => $this->cart->totalPrice
+            ]
+        );
     }
 
     /**
@@ -39,6 +62,30 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+        $order = new Order;
+        $order->email = Auth::user()->email;
+        $order->fill($request->all());
+        $order->user_id = Auth::id();
+        $order->save();
+
+        Auth::user()->fill($request->all());
+        Auth::user()->save();
+
+        foreach (Auth::user()->carts as $item) {
+            $orderItem = new OrderItem;
+            $orderItem->order_id = $order->id;
+            $orderItem->product_id = $item->product_id;
+            $orderItem->name = $item->item;
+            $orderItem->size = $item->product->size;
+            $orderItem->price = $item->product->price;
+            $orderItem->discount = $item->product->discount;
+            $orderItem->quantity = $item->quantity;
+            $orderItem->save();
+            $item->delete();
+        }
+        $request->session()->forget('cart');
+        return redirect('/');
     }
 
     /**
