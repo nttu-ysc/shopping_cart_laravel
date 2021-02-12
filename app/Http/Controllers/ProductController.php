@@ -56,7 +56,7 @@ class ProductController extends Controller
 
     public function indexWithCategory(Category $category)
     {
-        $products = Product::where('category_id', $category->id)->orderBy('id')->get();
+        $products = Product::where('category_id', $category->id)->orderBy('id')->paginate(9);
         $categories = Category::all();
         $tags = Tag::has('products')->withCount('products')->orderByDesc('products_count')->get();
         return view(
@@ -74,7 +74,7 @@ class ProductController extends Controller
 
     public function indexWithTag(Tag $tag)
     {
-        $products = $tag->products;
+        $products = $tag->products()->paginate(9);
         $categories = Category::all();
         $tags = Tag::has('products')->withCount('products')->orderByDesc('products_count')->get();
         return view(
