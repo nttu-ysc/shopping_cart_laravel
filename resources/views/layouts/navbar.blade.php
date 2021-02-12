@@ -12,6 +12,9 @@
                 <li class="nav-item">
                     <a href="/tags" class="nav-link">Tag</a>
                 </li>
+                <li class="nav-item">
+                    <a href="/orders" class="nav-link">Order</a>
+                </li>
                 @if (Auth::check())
                 <li class="nav-item">
                     <a class="nav-link">{{Auth::user()->name}}</a>
