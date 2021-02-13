@@ -6,7 +6,7 @@
         <ol class="breadcrumb mt-3">
             <li class="breadcrumb-item"><a href="/">Home</a>
             </li>
-            <li class="breadcrumb-item"><a href="/orders">Order List</a></li>
+            <li class="breadcrumb-item"><a href="/orders/admin">Order List</a></li>
             <li class="active breadcrumb-item">Order {{$order->id}}</li>
         </ol>
     </div>

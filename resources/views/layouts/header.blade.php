@@ -27,13 +27,13 @@
 
                     <li class="cart-info @if (request()->is('carts')) active @endif ">
                         <a @if (!(request()->is('carts'))) href="/carts" @endif><i class="fa fa-shopping-cart">
-                            </i> cart({{count($items)}})</a>
+                            </i> cart(@if(isset($items)){{count($items)}}@else 0 @endif)</a>
                         @if (!request()->is('carts'))
                         <div class="megamenu megamenu-quarter-width ">
                             <div class="megamenu-row">
                                 <div class="col12">
 
-                                    @if ($items)
+                                    @if (isset($items))
                                     <!--cart-->
                                     @foreach ($items as $item)
                                     <table class="table cart-table-list table-responsive">
@@ -99,6 +99,9 @@
                     <li>
                         <a class="nav-link">{{Auth::user()->name}}</a>
                         <ul class="dropdown">
+                            <li>
+                                <a href="/orders">orders</a>
+                            </li>
                             <li>
                                 <form action="{{ route('logout') }}" method="post">
                                     @csrf
