@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,14 +15,8 @@ class StoreProduct extends FormRequest
      */
     public function authorize()
     {
-        $product = request()->product;
-        if (!isset($product)) {
+        if (Auth::user()->role === User::ROLE_ADMIN) {
             return true;
-        }
-        if (Auth::id() === $product->user_id) {
-            return true;
-        }else {
-            return false;
         }
     }
 

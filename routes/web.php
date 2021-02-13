@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductController::class, 'index']);
 
-Route::get('/products/admin', [ProductController::class, 'admin'])->middleware('auth');
-Route::get('/products/show/{id}', [ProductController::class, 'showByAdmin'])->middleware('auth');
+Route::get('/products/admin', [ProductController::class, 'admin']);
+Route::get('/products/show/{id}', [ProductController::class, 'showByAdmin']);
 Route::get('/products/search', [ProductController::class, 'search']);
 Route::get('/products/category/{category}', [ProductController::class, 'indexWithCategory']);
 Route::get('/products/tags/{tag}', [ProductController::class, 'indexWithTag']);
@@ -36,12 +36,12 @@ Route::get('/carts/decrease/{id}', [CartController::class, 'decreaseByOne']);
 Route::post('/carts/update/{id}', [CartController::class, 'updateQuantity']);
 Route::post('/carts/add-quantity/{id}', [CartController::class, 'addQuantity']);
 
-Route::resource('categories', CategoryController::class)->except('show')->middleware('auth');
+Route::resource('categories', CategoryController::class)->except('show');
 
-Route::resource('tags', TagController::class)->only('index', 'destroy')->middleware('auth');
+Route::resource('tags', TagController::class)->only('index', 'destroy');
 
-Route::get('/orders/{id}/showByAdmin', [OrderController::class, 'showByAdmin'])->middleware('auth');
-Route::get('/orders/admin', [OrderController::class, 'admin'])->middleware('auth');
+Route::get('/orders/{id}/showByAdmin', [OrderController::class, 'showByAdmin']);
+Route::get('/orders/admin', [OrderController::class, 'admin']);
 Route::resource('orders', OrderController::class)->except('edit', 'update')->middleware('auth');
 
 Route::get('/dashboard', function () {

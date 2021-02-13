@@ -22,6 +22,8 @@ class OrderController extends Controller
 
             return $next($request);
         });
+
+        $this->middleware('can:admin')->only(['admin', 'showByAdmin', 'destroy']);
     }
 
     /**

@@ -29,6 +29,15 @@ class ProductController extends Controller
             }
             return $next($request);
         });
+
+        $this->middleware('can:admin')->except([
+            'index',
+            'indexWithCategory',
+            'indexWithTag',
+            'show',
+            'search',
+            'priceFilter',
+        ]);
     }
 
     /**
