@@ -99,6 +99,11 @@
                     <li>
                         <a class="nav-link">{{Auth::user()->name}}</a>
                         <ul class="dropdown">
+                            @can('admin')
+                            <li>
+                                <a href="/products/admin">Admin Panel</a>
+                            </li>
+                            @endcan
                             <li>
                                 <a href="/orders">orders</a>
                             </li>
