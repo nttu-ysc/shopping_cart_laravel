@@ -152,6 +152,6 @@ class OrderController extends Controller
      */
     public function destroy(order $order)
     {
-        //
+        $order->delete();
     }
 }

@@ -40,3 +40,14 @@ deleteTag = function (id) {
             })
     }
 };
+
+deleteOrder = function (id) {
+    var actionUrl = '/orders/' + id;
+    var result = confirm('Are you sure you want to delete this order?');
+    if (result) {
+        $.post(actionUrl, { _method: 'delete' })
+            .done(function (data) {
+                location.href = '/orders/admin';
+            })
+    }
+};
