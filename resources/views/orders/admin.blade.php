@@ -36,7 +36,6 @@
             <td>{{$order->address}}</td>
             <td>
                 <a href="/orders/{{$order->id}}/showByAdmin" class="btn btn-primary">See More</a>
-                <a href="/orders/{{$order->id}}/edit" class="btn btn-secondary">Edit</a>
                 <button class="btn btn-danger" onclick="deleteOrder({{$order->id}})">Delete</button>
             </td>
         </tr>

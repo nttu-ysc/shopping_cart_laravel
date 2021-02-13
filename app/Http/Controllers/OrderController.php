@@ -122,29 +122,6 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(order $order)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\order  $order
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, order $order)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\order  $order

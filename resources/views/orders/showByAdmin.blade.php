@@ -14,6 +14,12 @@
 @endsection
 
 @section('content')
+<div class="clearfix mb-3">
+    <div class="toolbox float-right">
+        <a href="/orders/admin" class="btn btn-primary">Back</a>
+        <button class="btn btn-danger" onclick="deleteOrder({{$order->id}})">Delete</button>
+    </div>
+</div>
 <table class="table table-striped">
     <thead>
         <tr>

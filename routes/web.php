@@ -42,7 +42,7 @@ Route::resource('tags', TagController::class)->only('index', 'destroy')->middlew
 
 Route::get('/orders/{id}/showByAdmin', [OrderController::class, 'showByAdmin'])->middleware('auth');
 Route::get('/orders/admin', [OrderController::class, 'admin'])->middleware('auth');
-Route::resource('orders', OrderController::class)->middleware('auth');
+Route::resource('orders', OrderController::class)->except('edit', 'update')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
