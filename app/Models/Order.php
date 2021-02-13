@@ -11,6 +11,24 @@ class Order extends Model
 
     protected $fillable = ['firstName', 'lastName', 'email', 'mobile', 'email', 'country', 'address', 'remark'];
 
+    public function totalQuantity()
+    {
+        $totalQuantity = 0;
+        foreach ($this->orderItems as $item) {
+            $totalQuantity += $item->quantity;
+        }
+        return $totalQuantity;
+    }
+
+    public function totalPrice()
+    {
+        $totalPrice = 0;
+        foreach ($this->orderItems as $item) {
+            $totalPrice += $item->totalEachPrice();
+        }
+        return $totalPrice;
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');

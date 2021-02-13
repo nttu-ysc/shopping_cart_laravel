@@ -14,7 +14,7 @@ class UpdateProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->float('discount', 8, 5)->default(0)->change();
+            $table->float('discount', 8, 5)->default(1)->change();
         });
     }
 

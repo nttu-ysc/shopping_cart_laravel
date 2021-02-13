@@ -40,6 +40,7 @@ Route::resource('categories', CategoryController::class)->except('show')->middle
 
 Route::resource('tags', TagController::class)->only('index', 'destroy')->middleware('auth');
 
+Route::get('/orders/{id}/showByAdmin', [OrderController::class, 'showByAdmin'])->middleware('auth');
 Route::resource('orders', OrderController::class)->middleware('auth');
 
 Route::get('/dashboard', function () {

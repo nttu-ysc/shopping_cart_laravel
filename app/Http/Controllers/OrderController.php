@@ -96,7 +96,13 @@ class OrderController extends Controller
      */
     public function show(order $order)
     {
-        //
+    }
+
+    public function showByAdmin($id)
+    {
+        $order = Order::find($id);
+        $items = $order->orderItems()->orderBy('product_id')->get();
+        return view('orders.showByAdmin', ['items' => $items, 'order' => $order]);
     }
 
     /**
