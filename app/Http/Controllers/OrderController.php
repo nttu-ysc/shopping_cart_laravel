@@ -31,8 +31,22 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $orders = Auth::user()->orders()->withCount('orderItems')->get();
+        return view(
+            'orders/index',
+            [
+                'orders' => $orders,
+                'items' => $this->cart->items,
+                'totalQuantity' => $this->cart->totalQuantity,
+                'totalPrice' => $this->cart->totalPrice
+            ]
+        );
+    }
+
+    public function admin()
+    {
         $orders = Order::withCount('orderItems')->get();
-        return view('orders/index', ['orders' => $orders]);
+        return view('orders/admin', ['orders' => $orders]);
     }
 
     /**
