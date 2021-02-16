@@ -49,12 +49,34 @@
         @endforeach
     </tbody>
 </table>
-<div class="clearfix">
-    <ul class="list-group float-right">
-        <li class="list-group-item ">
-            <h3><small>Total Quantity: </small>{{$order->totalQuantity()}}</h3>
-            <h3><small>Total Price: </small>{{$order->totalPrice()}}</h3>
-        </li>
-    </ul>
+<div class="row border-top border-primary pt-4">
+    <dl class="row col-sm-9">
+        <dt class="col-sm-3">Subscriber</dt>
+        <dd class="col-sm-9">{{$order->firstName}} {{$order->lastName}}</dd>
+
+        <dt class="col-sm-3">Mobile</dt>
+        <dd class="col-sm-9">{{$order->mobile}}</dd>
+
+        <dt class="col-sm-3">Email</dt>
+        <dd class="col-sm-9"><a href="mailto:{{$order->email}}">{{$order->email}}</a></dd>
+
+        <dt class="col-sm-3">Country</dt>
+        <dd class="col-sm-9">{{$order->country}}</dd>
+
+        <dt class="col-sm-3">Address</dt>
+        <dd class="col-sm-9">{{$order->address}}</dd>
+
+        <dt class="col-sm-3">Remark</dt>
+        <dd class="col-sm-9">
+            <p>{{$order->remark}}</p>
+        </dd>
+    </dl>
+    <dl class="row col-sm-3">
+        <dt class="col-sm-6">Total Quantity</dt>
+        <dd class="col-sm-6">{{$order->totalQuantity()}}</dd>
+
+        <dt class="col-sm-6">Total Price</dt>
+        <dd class="col-sm-6">{{$order->totalPrice()}}</dd>
+    </dl>
 </div>
 @endsection

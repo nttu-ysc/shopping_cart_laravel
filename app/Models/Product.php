@@ -13,7 +13,7 @@ class Product extends Model
 
     public function discountPrice()
     {
-        if ($this->discount == 0) {
+        if (round($this->discount) == 0) {
             return $this->price;
         } else {
             return round($this->price * $this->discount);
@@ -30,7 +30,6 @@ class Product extends Model
             $tagsString = '#' . implode('#', $tagsName);
             return $tagsString;
         }
-
     }
 
     public function setDiscountAttribute($value)
