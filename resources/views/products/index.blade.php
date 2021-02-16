@@ -55,7 +55,7 @@
                     <!--product option-->
                     <div class="row">
                         @foreach ($products as $product)
-                        @if ($product->discount == 0)
+                        @if (round($product->discount, 2) == 0)
                         <div class="col-md-4">
                             <!--product list-->
                             <div class="product-list">

@@ -11,7 +11,7 @@ class OrderItem extends Model
 
     public function totalEachPrice()
     {
-        if (round($this->discount) == 0) {
+        if (round($this->discount, 2) == 0) {
             return $this->price * $this->quantity;
         } else {
             return round($this->price * $this->discount) * $this->quantity;

@@ -37,60 +37,6 @@
 </div>
 <!--price filter-->
 
-
-<!--top rated product-->
-<div class="widget">
-    <div class="heading-title-alt text-left heading-border-bottom">
-        <h6 class="text-uppercase">Top Rated Products</h6>
-    </div>
-    <ul class="widget-latest-post">
-        <li>
-            <div class="thumb">
-                <a href="#">
-                    <img src="/assets/img/product/4.jpg" alt="">
-                </a>
-            </div>
-            <div class="w-desk">
-                <a href="#">Praesent pellentesque</a>
-                <div class="price">$25.99</div>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <div class="product-cart">
-                    <a href="#"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="thumb">
-                <a href="#">
-                    <img src="/assets/img/product/5.jpg" alt="">
-                </a>
-            </div>
-            <div class="w-desk">
-                <a href="#">Shirt With Mesh Sleeves</a>
-                <div class="price">$35.99</div>
-                <div class="product-rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <div class="product-cart">
-                    <a href="#"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
-<!--top rated product-->
-
-
 <!--product tags-->
 <div class="widget">
     <div class="heading-title-alt text-left heading-border-bottom">
