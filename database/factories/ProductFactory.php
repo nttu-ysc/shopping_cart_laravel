@@ -22,7 +22,7 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->randomDigitNot(0),
+            'user_id' => '1',
             'category_id' => $this->faker->randomDigitNot(0),
             'name' => $this->faker->firstName(),
             'size' => $this->faker->randomElement(['S', 'XS', 'M', 'L', 'XL']),

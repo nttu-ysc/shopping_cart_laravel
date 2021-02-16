@@ -30,4 +30,12 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
         ];
     }
+
+    public function admin()
+    {
+        return $this->state([
+            'role' => 'admin',
+            'email' => '123@gmail.com',
+        ]);
+    }
 }
