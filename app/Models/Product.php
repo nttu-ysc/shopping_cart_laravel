@@ -56,4 +56,9 @@ class Product extends Model
     {
         return $this->belongsToMany('App\Models\Tag');
     }
+
+    public function skus()
+    {
+        return $this->hasMany('App\Models\Sku');
+    }
 }
