@@ -36,28 +36,31 @@
                                     @if (isset($items))
                                     <!--cart-->
                                     @foreach ($items as $item)
+                                    @foreach ($item as $sku)
+
                                     <table class="table cart-table-list table-responsive">
                                         <tr>
                                             <td>
-                                                <a href="/products/{{$item['item']->id}}">
-                                                    <img src="{{$item['item']->thumbnail}}" alt="" />
+                                                <a href="/products/{{$sku['item']->id}}">
+                                                    <img src="{{$sku['item']->thumbnail}}" alt="" />
                                                 </a>
                                             </td>
-                                            <td><a href="/products/{{$item['item']->id}}">{{$item['item']->name}}</a>
+                                            <td><a href="/products/{{$sku['item']->id}}">{{$sku['item']->name}}</a>
                                             </td>
-                                            <td>X{{$item['quantity']}}</td>
-                                            <td>{{$item['price']}}
-                                                @if ($item['item']->discount)
-                                                <del>{{$item['item']->price*$item['quantity']}}</del> </del>
+                                            <td>X{{$sku['quantity']}}</td>
+                                            <td>{{$sku['price']}}
+                                                @if ($sku['item']->discount)
+                                                <del>{{$sku['item']->price*$sku['quantity']}}</del> </del>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="/carts/remove/{{$item['item']->id}}" class="close">
+                                                <a href="/carts/remove/{{$sku['item']->id}}" class="close">
                                                     <img src="/assets/img/product/close.png" alt="" />
                                                 </a>
                                             </td>
                                         </tr>
                                     </table>
+                                    @endforeach
                                     @endforeach
 
                                     <div class="total-cart pull-right">

@@ -256,18 +256,21 @@ class ProductController extends Controller
     public function storeToDatabase()
     {
         if (Auth::check()) {
-            foreach ($this->cart->items as $id => $item) {
-                Cart::updateOrCreate(
-                    [
-                        'item' => $item['item']->name,
-                        'user_id' => Auth::id(),
-                    ],
-                    [
-                        'quantity' => $item['quantity'],
-                        'user_id' => Auth::id(),
-                        'product_id' => $id,
-                    ]
-                );
+            foreach ($this->cart->items as $productId => $item) {
+                foreach ($item as $skuId => $sku) {
+                    Cart::updateOrCreate(
+                        [
+                            'item' => $sku['item']->name,
+                            'user_id' => Auth::id(),
+                            'sku_id' => $skuId,
+                        ],
+                        [
+                            'quantity' => $sku['quantity'],
+                            'user_id' => Auth::id(),
+                            'product_id' => $productId,
+                        ]
+                    );
+                }
             }
         }
     }
