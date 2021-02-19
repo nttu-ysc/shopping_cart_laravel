@@ -5,9 +5,10 @@ $.ajaxSetup({
 });
 
 $('.cart-table').on('blur', '.cart-quantity', function (e) {
-    var id = $(e.currentTarget).closest('tr').data('id');
-    var quantity = $(e.currentTarget).val();
-    var action = '/carts/update/' + id;
+    let id = $(e.currentTarget).closest('tr').data('id');
+    let quantity = $(e.currentTarget).val();
+    let skuId = $(e.currentTarget).closest('tr').data('skuid');
+    let action = '/carts/update/' + id + '/' + skuId;
     if (quantity > 0) {
         $.post(action, { quantity: quantity, })
             .done(function (data) {

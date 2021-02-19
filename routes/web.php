@@ -31,9 +31,9 @@ Route::resource('products', ProductController::class);
 Route::get('/carts', [CartController::class, 'index']);
 Route::get('/carts/add/{id}', [CartController::class, 'addItemToCart']);
 Route::get('/carts/remove/{id}/{skuId}', [CartController::class, 'removeItem']);
-Route::get('/carts/increase/{id}', [CartController::class, 'increaseByOne']);
-Route::get('/carts/decrease/{id}', [CartController::class, 'decreaseByOne']);
-Route::post('/carts/update/{id}', [CartController::class, 'updateQuantity']);
+Route::get('/carts/increase/{id}/{skuId}', [CartController::class, 'increaseByOne']);
+Route::get('/carts/decrease/{id}/{skuId}', [CartController::class, 'decreaseByOne']);
+Route::post('/carts/update/{id}/{skuId}', [CartController::class, 'updateQuantity']);
 Route::post('/carts/add-quantity/{id}', [CartController::class, 'addQuantity']);
 
 Route::resource('categories', CategoryController::class)->except('show');

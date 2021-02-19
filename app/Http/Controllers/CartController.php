@@ -30,7 +30,6 @@ class CartController extends Controller
      */
     public function index()
     {
-        // dd($this->cart);
         return view(
             'carts.index',
             [
@@ -62,7 +61,8 @@ class CartController extends Controller
 
     public function increaseByOne(Request $request, $id)
     {
-        $this->cart->increaseByOne($id);
+        $sku = Sku::find($request->skuId);
+        $this->cart->increaseByOne($id, $sku);
         $request->session()->put('cart', $this->cart);
         $this->storeToDatabase();
         return redirect()->action([CartController::class, 'index']);
@@ -70,16 +70,18 @@ class CartController extends Controller
 
     public function decreaseByOne(Request $request, $id)
     {
-        $this->cart->decreaseByOne($id);
+        $sku = Sku::find($request->skuId);
+        $this->cart->decreaseByOne($id, $sku);
         $request->session()->put('cart', $this->cart);
         $this->storeToDatabase();
-        $this->deleteToDatabase($id);
+        $this->deleteToDatabase($id, $sku);
         return redirect()->action([CartController::class, 'index']);
     }
 
     public function updateQuantity(Request $request, $id)
     {
-        $this->cart->updateQuantity($id, $request->quantity);
+        $sku = Sku::find($request->skuId);
+        $this->cart->updateQuantity($id, $sku, $request->quantity);
         $request->session()->put('cart', $this->cart);
         $this->storeToDatabase();
     }
