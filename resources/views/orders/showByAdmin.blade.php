@@ -25,7 +25,7 @@
         <tr>
             <th scope="col">Product NO.</th>
             <th scope="col">Name</th>
-            <th scope="col">Size</th>
+            <th scope="col">Spec</th>
             <th scope="col">Prize</th>
             <th scope="col">Discount</th>
             <th scope="col">Quantity</th>
@@ -37,7 +37,7 @@
         <tr>
             <th scope="row">{{$item->product_id}}</th>
             <td>{{$item->name}}</td>
-            <td>{{$item->size}}</td>
+            <td>{{$item->sku->size}}/{{$item->sku->color}}</td>
             <td>
                 {{$item->product->discountPrice()}}
                 <small><del>{{$item->price}}</del></small>

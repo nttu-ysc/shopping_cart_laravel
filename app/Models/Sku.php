@@ -20,4 +20,9 @@ class Sku extends Model
     {
         return $this->hasMany('App\Models\Cart');
     }
+
+    public function orderItems()
+    {
+        return $this->hasMany('App\Models\OrderItem');
+    }
 }

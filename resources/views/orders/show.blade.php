@@ -31,6 +31,7 @@
                                 <tr>
                                     <th>Image</th>
                                     <th>Product Name</th>
+                                    <th>Spec</th>
                                     <th>Discount</th>
                                     <th>Quantity</th>
                                     <th>Unit Price</th>
@@ -50,6 +51,7 @@
                                     </td>
                                     <td><a href="/products/{{$orderItem->product_id}}">{{$orderItem->name}}</a>
                                     </td>
+                                    <td>{{$orderItem->sku->size}}/{{$orderItem->sku->color}}</td>
                                     <td>{{$orderItem->discount}}</td>
                                     <td>
                                         <div class="cart-action">

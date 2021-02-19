@@ -92,8 +92,8 @@ class OrderController extends Controller
             $orderItem = new OrderItem;
             $orderItem->order_id = $order->id;
             $orderItem->product_id = $item->product_id;
+            $orderItem->sku_id = $item->sku_id;
             $orderItem->name = $item->item;
-            $orderItem->size = $item->product->size;
             $orderItem->price = $item->product->price;
             $orderItem->discount = $item->product->discount;
             $orderItem->quantity = $item->quantity;
