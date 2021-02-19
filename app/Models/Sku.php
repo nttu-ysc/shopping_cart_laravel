@@ -9,6 +9,8 @@ class Sku extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['product_id', 'color', 'size',];
+
     public function product()
     {
         return $this->belongsTo('App\Models\Product');

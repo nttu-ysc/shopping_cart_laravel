@@ -20,7 +20,7 @@ $actionUrl = ($isCreate) ? '/products' : '/products/'.$product->id;
     @endif
     <div class="form-group">
         <label>Product name</label>
-        <input class="form-control" name="name" value="{{$product->name}}">
+        <input class="form-control" name="name" required value="{{$product->name}} ">
     </div>
     <div class="form-group">
         <label>Thumbnail</label>
@@ -47,23 +47,43 @@ $actionUrl = ($isCreate) ? '/products' : '/products/'.$product->id;
         <input class="form-control" placeholder="EX : #HAT#Taiwan#Sunday" name="tags"
             value="{{$product->tagsToString()}}">
     </div>
-    <label>Size</label>
-    <div class="form-group">
-        <select class="form-control" name="size">
-            <option @if ($product->size == 'XS') selected @endif>XS</option>
-            <option @if ($product->size == 'S') selected @endif>S</option>
-            <option @if ($product->size == 'M') selected @endif>M</option>
-            <option @if ($product->size == 'L') selected @endif>L</option>
-            <option @if ($product->size == 'XL') selected @endif>XL</option>
-        </select>
+
+    <div class="spec">
+        <div class="form-group">
+            <ul class="list-group">
+                @foreach ($product->skus as $sku)
+                <li class="list-group-item">{{$sku->size}}/{{$sku->color}}</li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="row form-group">
+            <div class="col">
+                <label>Size</label>
+                <div class="form-group">
+                    <select class="form-control" name="size">
+                        <option @if ($product->size == 'XS') selected @endif>XS</option>
+                        <option @if ($product->size == 'S') selected @endif>S</option>
+                        <option @if ($product->size == 'M') selected @endif>M</option>
+                        <option @if ($product->size == 'L') selected @endif>L</option>
+                        <option @if ($product->size == 'XL') selected @endif>XL</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col">
+                <label>Color</label>
+                <input type="text" class="form-control" name="color" @if($isCreate) required @endif>
+            </div>
+        </div>
     </div>
+
+
     <div class="form-group">
         <label>Price</label>
-        <input class="form-control" name="price" value="{{$product->price}}">
+        <input class="form-control" name="price" value="{{$product->price}}" required>
     </div>
     <div class="form-group">
         <label>Quantity</label>
-        <input class="form-control" name="quantity" value="{{$product->quantity}}">
+        <input class="form-control" name="quantity" value="{{$product->quantity}}" required>
     </div>
     <div class="form-group">
         <label>Discount</label>

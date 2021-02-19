@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProduct;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Sku;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -125,7 +126,11 @@ class ProductController extends Controller
      */
     public function store(StoreProduct $request)
     {
-        $request->validate(['thumbnail' => 'required']);
+        $request->validate([
+            'thumbnail' => 'required',
+            'size' => 'required',
+            'color' => 'required',
+        ]);
         $product = new Product;
         if ($request->file('thumbnail')) {
             $path = $request->file('thumbnail')->store('public');
@@ -136,6 +141,11 @@ class ProductController extends Controller
         $product->fill($request->all());
         $product->user_id = Auth::id();
         $product->save();
+
+        $sku = new Sku;
+        $sku->fill($request->all());
+        $sku->product_id = $product->id;
+        $sku->save();
 
         $this->addTagsToProduct($request->tags, $product);
         return redirect('/products/admin');
@@ -199,6 +209,20 @@ class ProductController extends Controller
 
         $product->fill($request->all());
         $product->save();
+
+        if (isset($request->color))
+            $sku = Sku::updateOrCreate(
+                [
+                    'product_id' => $product->id,
+                    'size' => $request->size,
+                    'color' => $request->color
+                ],
+                [
+                    'product_id' => $product->id,
+                    'size' => $request->size,
+                    'color' => $request->color
+                ]
+            );
 
         $product->tags()->detach();
         $this->addTagsToProduct($request->tags, $product);
