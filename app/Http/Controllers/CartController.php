@@ -52,10 +52,11 @@ class CartController extends Controller
 
     public function removeItem(Request $request, $id)
     {
-        $this->cart->removeItem($id);
+        $sku = Sku::find($request->skuId);
+        $this->cart->removeItem($id, $sku);
         $request->session()->put('cart', $this->cart);
         $this->storeToDatabase();
-        $this->deleteToDatabase($id);
+        $this->deleteToDatabase($id, $sku);
         return redirect()->action([CartController::class, 'index']);
     }
 
@@ -114,9 +115,9 @@ class CartController extends Controller
         }
     }
 
-    public function deleteToDatabase($id)
+    public function deleteToDatabase($id, $sku)
     {
-        if (!isset($this->cart->items[$id])) {
+        if (!isset($this->cart->items[$id][$sku->id])) {
             $cart = Cart::where(['product_id' => $id, 'user_id' => Auth::id()])->first();
             $cart->delete();
         }

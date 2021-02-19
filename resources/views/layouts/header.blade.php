@@ -54,7 +54,8 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="/carts/remove/{{$sku['item']->id}}" class="close">
+                                                <a href="/carts/remove/{{$sku['item']->id}}/{{$sku['sku']->id}}"
+                                                    class="close">
                                                     <img src="/assets/img/product/close.png" alt="" />
                                                 </a>
                                             </td>

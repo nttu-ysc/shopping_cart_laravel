@@ -61,8 +61,8 @@
                                             <input class="form-control cart-quantity" value="{{$sku['quantity']}}"
                                                 style="margin-right: 0px" required />
                                             <a href="/carts/increase/{{$sku['item']->id}}" class="btn btn-default">+</a>
-                                            <a href="/carts/remove/{{$sku['item']->id}}" class="btn btn-default"
-                                                type="button"><i class="fa fa-trash-o"></i>
+                                            <a href="/carts/remove/{{$sku['item']->id}}/{{$sku['sku']->id}}"
+                                                class="btn btn-default" type="button"><i class="fa fa-trash-o"></i>
                                             </a>
                                         </div>
                                     </td>

@@ -135,11 +135,13 @@ class Cart extends Model
         }
     }
 
-    public function removeItem($id)
+    public function removeItem($id, $sku)
     {
-        $this->totalQuantity -= $this->items[$id]['quantity'];
-        $this->totalPrice -= $this->items[$id]['price'];
-        unset($this->items[$id]);
+        $this->totalQuantity -= $this->items[$id][$sku->id]['quantity'];
+        $this->totalPrice -= $this->items[$id][$sku->id]['price'];
+        unset($this->items[$id][$sku->id]);
+        if (empty($this->items[$id]))
+            unset($this->items[$id]);
     }
 
     public function user()
