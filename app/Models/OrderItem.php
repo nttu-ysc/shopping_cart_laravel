@@ -9,6 +9,10 @@ class OrderItem extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'productData' => 'array',
+    ];
+
     public function totalEachPrice()
     {
         if (round($this->discount, 2) == 0) {
