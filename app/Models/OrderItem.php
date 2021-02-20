@@ -15,10 +15,15 @@ class OrderItem extends Model
 
     public function totalEachPrice()
     {
-        if (round($this->discount, 2) == 0) {
-            return $this->price * $this->quantity;
+        return $this->discountPrice() * $this->productData['quantity'];
+    }
+
+    public function discountPrice()
+    {
+        if (round($this->productData['discount'], 2) == 0) {
+            return $this->productData['price'];
         } else {
-            return round($this->price * $this->discount) * $this->quantity;
+            return round($this->productData['price'] * $this->productData['discount']);
         }
     }
 
@@ -31,7 +36,7 @@ class OrderItem extends Model
     {
         return $this->belongsTo('App\Models\Product');
     }
-    
+
     public function sku()
     {
         return $this->belongsTo('App\Models\Sku');

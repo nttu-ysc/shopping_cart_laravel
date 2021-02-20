@@ -36,14 +36,14 @@
         @foreach ($items as $item)
         <tr>
             <th scope="row">{{$item->product_id}}</th>
-            <td>{{$item->name}}</td>
-            <td>{{$item->sku->size}}/{{$item->sku->color}}</td>
+            <td>{{$item->productData['name']}}</td>
+            <td>{{$item->productData['size']}}/{{$item->productData['color']}}</td>
             <td>
-                {{$item->product->discountPrice()}}
-                <small><del>{{$item->price}}</del></small>
+                {{$item->discountPrice()}}
+                <small><del>{{$item->productData['price']}}</del></small>
             </td>
-            <td>{{$item->discount}}</td>
-            <td>{{$item->quantity}}</td>
+            <td>{{$item->productData['discount']}}</td>
+            <td>{{$item->productData['quantity']}}</td>
             <td>{{$item->totalEachPrice()}}</td>
         </tr>
         @endforeach
