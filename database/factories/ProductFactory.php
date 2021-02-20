@@ -25,7 +25,6 @@ class ProductFactory extends Factory
             'user_id' => '1',
             'category_id' => $this->faker->randomDigitNot(0),
             'name' => $this->faker->firstName(),
-            'size' => $this->faker->randomElement(['S', 'XS', 'M', 'L', 'XL']),
             'price' => $this->faker->numberBetween(0, $max = 9999),
             'quantity' => $this->faker->numberBetween($min = 1, $max = 999),
             'discount' => $this->faker->randomFloat(1, 10, 100),

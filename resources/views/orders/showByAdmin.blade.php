@@ -25,7 +25,7 @@
         <tr>
             <th scope="col">Product NO.</th>
             <th scope="col">Name</th>
-            <th scope="col">Size</th>
+            <th scope="col">Spec</th>
             <th scope="col">Prize</th>
             <th scope="col">Discount</th>
             <th scope="col">Quantity</th>
@@ -36,14 +36,14 @@
         @foreach ($items as $item)
         <tr>
             <th scope="row">{{$item->product_id}}</th>
-            <td>{{$item->name}}</td>
-            <td>{{$item->size}}</td>
+            <td>{{$item->productData['name']}}</td>
+            <td>{{$item->productData['size']}}/{{$item->productData['color']}}</td>
             <td>
-                {{$item->product->discountPrice()}}
-                <small><del>{{$item->price}}</del></small>
+                {{$item->discountPrice()}}
+                <small><del>{{$item->productData['price']}}</del></small>
             </td>
-            <td>{{$item->discount}}</td>
-            <td>{{$item->quantity}}</td>
+            <td>{{$item->productData['discount']}}</td>
+            <td>{{$item->productData['quantity']}}</td>
             <td>{{$item->totalEachPrice()}}</td>
         </tr>
         @endforeach

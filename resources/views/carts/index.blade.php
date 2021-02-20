@@ -31,6 +31,7 @@
                                 <tr>
                                     <th>Image</th>
                                     <th>Product Name</th>
+                                    <th>Spec</th>
                                     <th>Discount</th>
                                     <th>Quantity</th>
                                     <th>Unit Price</th>
@@ -39,34 +40,38 @@
                             </thead>
                             <tbody>
                                 @foreach ($items as $item)
-                                <tr data-id="{{$item['item']->id}}">
+                                @foreach ($item as $sku)
+
+                                <tr data-id="{{$sku['item']->id}}" data-skuId="{{$sku['sku']->id}}">
                                     <td>
                                         <div class="cart-img">
-                                            <a href="/products/{{$item['item']->id}}">
-                                                <img src="{{$item['item']->thumbnail}}" alt="">
+                                            <a href="/products/{{$sku['item']->id}}">
+                                                <img src="{{$sku['item']->thumbnail}}" alt="">
                                             </a>
                                         </div>
                                     </td>
-                                    <td><a href="/products/{{$item['item']->id}}">{{$item['item']->name}}</a>
+                                    <td><a href="/products/{{$sku['item']->id}}">{{$sku['item']->name}}</a>
                                     </td>
-                                    <td>{{$item['item']->discount}}</td>
+                                    <td>{{$sku['sku']->size}}/{{$sku['sku']->color}}</td>
+                                    <td>{{$sku['item']->discount}}</td>
                                     <td>
                                         <div class="cart-action">
-                                            <a href="/carts/decrease/{{$item['item']->id}}"
+                                            <a href="/carts/decrease/{{$sku['item']->id}}/{{$sku['sku']->id}}"
                                                 class="btn btn-default pull-left" style="margin-right: 0px">-</a>
-                                            <input class="form-control cart-quantity" value="{{$item['quantity']}}"
+                                            <input class="form-control cart-quantity" value="{{$sku['quantity']}}"
                                                 style="margin-right: 0px" required />
-                                            <a href="/carts/increase/{{$item['item']->id}}"
+                                            <a href="/carts/increase/{{$sku['item']->id}}/{{$sku['sku']->id}}"
                                                 class="btn btn-default">+</a>
-                                            <a href="/carts/remove/{{$item['item']->id}}" class="btn btn-default"
-                                                type="button"><i class="fa fa-trash-o"></i>
+                                            <a href="/carts/remove/{{$sku['item']->id}}/{{$sku['sku']->id}}"
+                                                class="btn btn-default" type="button"><i class="fa fa-trash-o"></i>
                                             </a>
                                         </div>
                                     </td>
-                                    <td>{{$item['item']->discountPrice()}}
-                                        @if ($item['item']->discount) <del>{{$item['item']->price}}</del> @endif</td>
-                                    <td>{{$item['price']}}</td>
+                                    <td>{{$sku['item']->discountPrice()}}
+                                        @if ($sku['item']->discount) <del>{{$sku['item']->price}}</del> @endif</td>
+                                    <td>{{$sku['price']}}</td>
                                 </tr>
+                                @endforeach
                                 @endforeach
                             </tbody>
                             @else

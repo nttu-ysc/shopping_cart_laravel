@@ -15,7 +15,7 @@ class Order extends Model
     {
         $totalQuantity = 0;
         foreach ($this->orderItems as $item) {
-            $totalQuantity += $item->quantity;
+            $totalQuantity += $item->productData['quantity'];
         }
         return $totalQuantity;
     }

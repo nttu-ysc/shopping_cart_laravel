@@ -31,6 +31,7 @@
                                 <tr>
                                     <th>Image</th>
                                     <th>Product Name</th>
+                                    <th>Spec</th>
                                     <th>Discount</th>
                                     <th>Quantity</th>
                                     <th>Unit Price</th>
@@ -43,22 +44,25 @@
                                     <td>
                                         <div class="cart-img">
                                             <a href="/products/{{$orderItem->product_id}}">
-                                                <img src="{{$orderItem->product->thumbnail}}" class="img-thumbnail"
-                                                    alt="">
+                                                <img src="{{$orderItem->productData['thumbnail']}}"
+                                                    class="img-thumbnail" alt="">
                                             </a>
                                         </div>
                                     </td>
-                                    <td><a href="/products/{{$orderItem->product_id}}">{{$orderItem->name}}</a>
+                                    <td><a
+                                            href="/products/{{$orderItem->product_id}}">{{$orderItem->productData['name']}}</a>
                                     </td>
-                                    <td>{{$orderItem->discount}}</td>
+                                    </td>
+                                    <td>{{$orderItem->productData['size']}}/{{$orderItem->productData['color']}}</td>
+                                    <td>{{$orderItem->productData['discount']}}</td>
                                     <td>
                                         <div class="cart-action">
                                             <div class=" cart-quantity" style="margin-right: 0px">
-                                                {{$orderItem->quantity}}
+                                                {{$orderItem->productData['quantity']}}
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{{$orderItem->product->discountPrice()}}
+                                    <td>{{$orderItem->discountPrice()}}
                                         @if ($orderItem->discount) <del>{{$orderItem->price}}</del> @endif</td>
                                     <td>{{$orderItem->totalEachPrice()}}</td>
                                 </tr>

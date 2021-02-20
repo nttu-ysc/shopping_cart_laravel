@@ -30,6 +30,7 @@
                                 <tr>
                                     <th>Image</th>
                                     <th>Product Name</th>
+                                    <th>Spec</th>
                                     <th>Discount</th>
                                     <th>Quantity</th>
                                     <th>Unit Price</th>
@@ -38,28 +39,31 @@
                             </thead>
                             <tbody>
                                 @foreach ($items as $item)
-                                <tr data-id="{{$item['item']->id}}">
+                                @foreach ($item as $sku)
+                                <tr data-id="{{$sku['item']->id}}">
                                     <td>
                                         <div class="cart-img">
-                                            <a href="/products/{{$item['item']->id}}">
-                                                <img src="{{$item['item']->thumbnail}}" alt="">
+                                            <a href="/products/{{$sku['item']->id}}">
+                                                <img src="{{$sku['item']->thumbnail}}" alt="">
                                             </a>
                                         </div>
                                     </td>
-                                    <td><a href="/products/{{$item['item']->id}}">{{$item['item']->name}}</a>
+                                    <td><a href="/products/{{$sku['item']->id}}">{{$sku['item']->name}}</a>
                                     </td>
-                                    <td>{{$item['item']->discount}}</td>
+                                    <td>{{$sku['sku']->size}}/{{$sku['sku']->color}}</td>
+                                    <td>{{$sku['item']->discount}}</td>
                                     <td>
                                         <div class="cart-action">
                                             <div class=" cart-quantity" style="margin-right: 0px">
-                                                {{$item['quantity']}}
+                                                {{$sku['quantity']}}
                                             </div>
                                         </div>
                                     </td>
-                                    <td>{{$item['item']->discountPrice()}}
-                                        @if ($item['item']->discount) <del>{{$item['item']->price}}</del> @endif</td>
-                                    <td>{{$item['price']}}</td>
+                                    <td>{{$sku['item']->discountPrice()}}
+                                        @if ($sku['item']->discount) <del>{{$sku['item']->price}}</del> @endif</td>
+                                    <td>{{$sku['price']}}</td>
                                 </tr>
+                                @endforeach
                                 @endforeach
                             </tbody>
                         </table>

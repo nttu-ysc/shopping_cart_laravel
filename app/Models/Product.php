@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'size', 'price', 'quantity', 'discount', 'description', 'category_id'];
+    protected $fillable = ['name', 'price', 'quantity', 'discount', 'description', 'category_id'];
 
     public function discountPrice()
     {
@@ -55,5 +55,10 @@ class Product extends Model
     public function tags()
     {
         return $this->belongsToMany('App\Models\Tag');
+    }
+
+    public function skus()
+    {
+        return $this->hasMany('App\Models\Sku');
     }
 }

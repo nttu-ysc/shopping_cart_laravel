@@ -29,7 +29,6 @@ class StoreProduct extends FormRequest
     {
         return [
             'name' => 'required',
-            'size' => 'required',
             'price' => 'required',
             'quantity' => 'required',
         ];

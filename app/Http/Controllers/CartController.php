@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Sku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -41,25 +42,27 @@ class CartController extends Controller
 
     public function addItemToCart($id)
     {
-        $product = Product::find($id);
-        $this->cart->add($product, $id);
-        Session::put('cart', $this->cart);
-        $this->storeToDatabase();
-        return redirect('/');
+        // $product = Product::find($id);
+        // $this->cart->add($product, $id);
+        // Session::put('cart', $this->cart);
+        // $this->storeToDatabase();
+        return redirect('/products/' . $id);
     }
 
     public function removeItem(Request $request, $id)
     {
-        $this->cart->removeItem($id);
+        $sku = Sku::find($request->skuId);
+        $this->cart->removeItem($id, $sku);
         $request->session()->put('cart', $this->cart);
         $this->storeToDatabase();
-        $this->deleteToDatabase($id);
+        $this->deleteToDatabase($id, $sku);
         return redirect()->action([CartController::class, 'index']);
     }
 
     public function increaseByOne(Request $request, $id)
     {
-        $this->cart->increaseByOne($id);
+        $sku = Sku::find($request->skuId);
+        $this->cart->increaseByOne($id, $sku);
         $request->session()->put('cart', $this->cart);
         $this->storeToDatabase();
         return redirect()->action([CartController::class, 'index']);
@@ -67,16 +70,18 @@ class CartController extends Controller
 
     public function decreaseByOne(Request $request, $id)
     {
-        $this->cart->decreaseByOne($id);
+        $sku = Sku::find($request->skuId);
+        $this->cart->decreaseByOne($id, $sku);
         $request->session()->put('cart', $this->cart);
         $this->storeToDatabase();
-        $this->deleteToDatabase($id);
+        $this->deleteToDatabase($id, $sku);
         return redirect()->action([CartController::class, 'index']);
     }
 
     public function updateQuantity(Request $request, $id)
     {
-        $this->cart->updateQuantity($id, $request->quantity);
+        $sku = Sku::find($request->skuId);
+        $this->cart->updateQuantity($id, $sku, $request->quantity);
         $request->session()->put('cart', $this->cart);
         $this->storeToDatabase();
     }
@@ -84,7 +89,8 @@ class CartController extends Controller
     public function addQuantity(Request $request, $id)
     {
         $product = Product::find($id);
-        $this->cart->addQuantity($id, $request->quantity, $product);
+        $sku = Sku::find($request->spec);
+        $this->cart->addQuantity($id, $request->quantity, $product, $sku);
         $request->session()->put('cart', $this->cart);
         $this->storeToDatabase();
     }
@@ -92,25 +98,28 @@ class CartController extends Controller
     public function storeToDatabase()
     {
         if (Auth::check()) {
-            foreach ($this->cart->items as $id => $item) {
-                Cart::updateOrCreate(
-                    [
-                        'item' => $item['item']->name,
-                        'user_id' => Auth::id(),
-                    ],
-                    [
-                        'quantity' => $item['quantity'],
-                        'user_id' => Auth::id(),
-                        'product_id' => $id,
-                    ]
-                );
+            foreach ($this->cart->items as $productId => $item) {
+                foreach ($item as $skuId => $sku) {
+                    Cart::updateOrCreate(
+                        [
+                            'item' => $sku['item']->name,
+                            'user_id' => Auth::id(),
+                            'sku_id' => $skuId,
+                        ],
+                        [
+                            'quantity' => $sku['quantity'],
+                            'user_id' => Auth::id(),
+                            'product_id' => $productId,
+                        ]
+                    );
+                }
             }
         }
     }
 
-    public function deleteToDatabase($id)
+    public function deleteToDatabase($id, $sku)
     {
-        if (!isset($this->cart->items[$id])) {
+        if (!isset($this->cart->items[$id][$sku->id])) {
             $cart = Cart::where(['product_id' => $id, 'user_id' => Auth::id()])->first();
             $cart->delete();
         }

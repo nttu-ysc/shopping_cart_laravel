@@ -68,10 +68,12 @@
                     <div class="p-values">
                         <ul class="portfolio-meta m-bot-10 ">
                             <li>
-                                <span> Size </span>
+                                <span> Spec </span>
                                 <span>
-                                    <select class="form-control">
-                                        <option>{{$product->size}}</option>
+                                    <select class="form-control spec">
+                                        @foreach ($product->skus as $sku)
+                                        <option data-id="{{$sku->id}}">{{$sku->size}}/{{$sku->color}}</option>
+                                        @endforeach
                                     </select>
                                 </span>
                             </li>

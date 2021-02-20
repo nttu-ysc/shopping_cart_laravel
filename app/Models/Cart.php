@@ -9,7 +9,7 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'product_id', 'item', 'quantity'];
+    protected $fillable = ['user_id', 'product_id', 'sku_id', 'item', 'quantity'];
 
     public $items = [];
     public $totalQuantity = 0;
@@ -19,17 +19,18 @@ class Cart extends Model
     public function loadUserCart($carts)
     {
         foreach ($carts as $cart) {
-            if (!isset($this->items[$cart->product_id])) {
+            if (!isset($this->items[$cart->product_id][$cart->sku_id])) {
                 $this->totalQuantity += $cart->quantity;
                 $this->totalPrice += $cart->product->discountPrice() * $cart->quantity;
             } else {
-                $this->totalQuantity +=  $cart->quantity - $this->items[$cart->product_id]['quantity'];
-                $this->totalPrice += $cart->product->discountPrice() * $cart->quantity - $this->items[$cart->product_id]['price'];
+                $this->totalQuantity +=  $cart->quantity - $this->items[$cart->product_id][$cart->sku_id]['quantity'];
+                $this->totalPrice += $cart->product->discountPrice() * $cart->quantity - $this->items[$cart->product_id][$cart->sku_id]['price'];
             }
-            $this->items[$cart->product_id] =
+            $this->items[$cart->product_id][$cart->sku_id] =
                 [
                     'quantity' => $cart->quantity,
                     'price' => $cart->product->discountPrice() * $cart->quantity,
+                    'sku' => $cart->sku,
                     'item' => $cart->product,
                 ];
         }
@@ -63,46 +64,56 @@ class Cart extends Model
         $this->totalPrice += $item->discountPrice();
     }
 
-    public function increaseByOne($id)
+    public function increaseByOne($id, $sku)
     {
-        if ($this->items[$id]['quantity'] < $this->items[$id]['item']->quantity) {
-            $this->items[$id]['quantity']++;
-            $this->items[$id]['price'] += $this->items[$id]['item']->discountPrice();
+        if ($this->items[$id][$sku->id]['quantity'] < $this->items[$id][$sku->id]['item']->quantity) {
+            $this->items[$id][$sku->id]['quantity']++;
+            $this->items[$id][$sku->id]['price'] += $this->items[$id][$sku->id]['item']->discountPrice();
             $this->totalQuantity++;
-            $this->totalPrice += $this->items[$id]['item']->discountPrice();
+            $this->totalPrice += $this->items[$id][$sku->id]['item']->discountPrice();
         }
     }
 
-    public function decreaseByOne($id)
+    public function decreaseByOne($id, $sku)
     {
-        $this->items[$id]['quantity']--;
-        $this->items[$id]['price'] -= $this->items[$id]['item']->discountPrice();
+        $this->items[$id][$sku->id]['quantity']--;
+        $this->items[$id][$sku->id]['price'] -= $this->items[$id][$sku->id]['item']->discountPrice();
         $this->totalQuantity--;
-        $this->totalPrice -= $this->items[$id]['item']->discountPrice();
-        if ($this->items[$id]['quantity'] == 0) {
-            unset($this->items[$id]);
+        $this->totalPrice -= $this->items[$id][$sku->id]['item']->discountPrice();
+        if ($this->items[$id][$sku->id]['quantity'] == 0) {
+            unset($this->items[$id][$sku->id]);
+            if (empty($this->items[$id]))
+                unset($this->items[$id]);
         }
     }
 
-    public function addQuantity($id, $quantity, $product)
+    public function addQuantity($id, $quantity, $product, $sku)
     {
-        if (isset($this->items[$id])) {
-            $this->items[$id]['quantity'] += $quantity;
-            $this->totalQuantity += $quantity;
-            if ($this->items[$id]['quantity'] > $product->quantity) {
-                $this->totalQuantity -= $this->items[$id]['quantity'] - $product->quantity;
-                $this->items[$id]['quantity'] = $product->quantity;
+        $hasSpec = 0;
+        foreach ($this->items as $item) {
+            foreach ($item as  $sku1) {
+                if ($sku1['sku']->id === $sku->id)
+                    $hasSpec = 1;
             }
-            $this->items[$id]['price'] += $this->items[$id]['item']->discountPrice() * $this->items[$id]['quantity'];
-            $this->totalPrice += $this->items[$id]['item']->discountPrice() * $this->items[$id]['quantity'];
+        }
+        if (isset($this->items[$id]) && $hasSpec) {
+            $this->items[$id][$sku->id]['quantity'] += $quantity;
+            $this->totalQuantity += $quantity;
+            if ($this->items[$id][$sku->id]['quantity'] > $product->quantity) {
+                $this->totalQuantity -= $this->items[$id][$sku->id]['quantity'] - $product->quantity;
+                $this->items[$id][$sku->id]['quantity'] = $product->quantity;
+            }
+            $this->items[$id][$sku->id]['price'] += $this->items[$id][$sku->id]['item']->discountPrice() * $this->items[$id][$sku->id]['quantity'];
+            $this->totalPrice += $this->items[$id][$sku->id]['item']->discountPrice() * $this->items[$id][$sku->id]['quantity'];
         } else {
             if ($quantity > $product->quantity) {
                 $quantity = $product->quantity;
             }
-            $this->items[$id] =
+            $this->items[$id][$sku->id] =
                 [
-                    'quantity' => $quantity,
+                    'quantity' => (int)$quantity,
                     'price' => $product->discountPrice() * $quantity,
+                    'sku' => $sku,
                     'item' => $product,
                 ];
             $this->totalQuantity += $quantity;
@@ -110,27 +121,29 @@ class Cart extends Model
         }
     }
 
-    public function updateQuantity($id, $quantity)
+    public function updateQuantity($id, $sku, $quantity)
     {
-        if ($quantity <= $this->items[$id]['item']->quantity) {
+        if ($quantity <= $this->items[$id][$sku->id]['item']->quantity) {
 
-            $oldQuantity = $this->items[$id]['quantity'];
-            $oldPrice = $this->items[$id]['price'];
-            $this->items[$id]['quantity'] = $quantity;
-            $this->items[$id]['price'] = $this->items[$id]['item']->discountPrice() * $quantity;
+            $oldQuantity = $this->items[$id][$sku->id]['quantity'];
+            $oldPrice = $this->items[$id][$sku->id]['price'];
+            $this->items[$id][$sku->id]['quantity'] = $quantity;
+            $this->items[$id][$sku->id]['price'] = $this->items[$id][$sku->id]['item']->discountPrice() * $quantity;
             $this->totalQuantity += $quantity - $oldQuantity;
-            $this->totalPrice += $this->items[$id]['price'] - $oldPrice;
+            $this->totalPrice += $this->items[$id][$sku->id]['price'] - $oldPrice;
             if ($quantity == 0) {
-                unset($this->items[$id]);
+                unset($this->items[$id][$sku->id]);
             }
         }
     }
 
-    public function removeItem($id)
+    public function removeItem($id, $sku)
     {
-        $this->totalQuantity -= $this->items[$id]['quantity'];
-        $this->totalPrice -= $this->items[$id]['price'];
-        unset($this->items[$id]);
+        $this->totalQuantity -= $this->items[$id][$sku->id]['quantity'];
+        $this->totalPrice -= $this->items[$id][$sku->id]['price'];
+        unset($this->items[$id][$sku->id]);
+        if (empty($this->items[$id]))
+            unset($this->items[$id]);
     }
 
     public function user()
@@ -141,5 +154,10 @@ class Cart extends Model
     public function product()
     {
         return $this->belongsTo('App\Models\Product');
+    }
+
+    public function sku()
+    {
+        return $this->belongsTo('App\Models\Sku');
     }
 }
