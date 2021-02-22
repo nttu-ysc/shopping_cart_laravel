@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PriceFilterRequest;
 use App\Http\Requests\StoreProduct;
 use App\Models\Cart;
 use App\Models\Category;
@@ -293,15 +294,21 @@ class ProductController extends Controller
         }
     }
 
-    public function priceFilter(Request $request)
+    public function priceFilter(PriceFilterRequest $request)
     {
-        $products = Product::where('price', '>', $request->priceFrom)->where('price', '<', $request->priceTo)->get();
+        $products = Product::where('price', '>=', $request->priceFrom)->where('price', '<=', $request->priceTo)->paginate(9);
         $categories = Category::all();
+        $tags = Tag::all();
+        if ($products->count() == 0) {
+            return redirect('/')->withErrors('There is no product match.');
+        }
+
         return view(
             'products.index',
             [
                 'products' => $products,
                 'categories' => $categories,
+                'tags' => $tags,
                 'items' => $this->cart->items,
                 'totalQuantity' => $this->cart->totalQuantity,
                 'totalPrice' => $this->cart->totalPrice,

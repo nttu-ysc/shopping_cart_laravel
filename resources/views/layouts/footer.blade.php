@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <a href="#" class="m-bot-20 footer-logo">
-                        <img class="retina" src="//assets/img/logo-dark.png" alt="" />
+                        <img class="retina" src="/assets/img/logo-dark.png" alt="" />
                     </a>
                     <p>Massive is fully responsible, performance oriented and SEO optimized, retina ready
                         WordPress theme.</p>
