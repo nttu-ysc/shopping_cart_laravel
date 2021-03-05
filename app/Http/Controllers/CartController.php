@@ -119,7 +119,7 @@ class CartController extends Controller
 
     public function deleteToDatabase($id, $sku)
     {
-        if (!isset($this->cart->items[$id][$sku->id])) {
+        if (Auth::check()) {
             $cart = Cart::where(['product_id' => $id, 'user_id' => Auth::id()])->first();
             $cart->delete();
         }
