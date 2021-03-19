@@ -296,9 +296,11 @@ class ProductController extends Controller
 
     public function priceFilter(PriceFilterRequest $request)
     {
-        $products = Product::where('price', '>=', $request->priceFrom)->where('price', '<=', $request->priceTo)->paginate(9);
+        $products = Product::where('price', '>=', $request->priceFrom)->where('price', '<=', $request->priceTo)
+            ->orderBy('price', 'ASC')->paginate(9);
+        $products->appends(['priceFrom' => $request->priceFrom, 'priceTo' => $request->priceTo]);
         $categories = Category::all();
-        $tags = Tag::all();
+        $tags = Tag::has('products')->withCount('products')->orderByDesc('products_count')->get();
         if ($products->count() == 0) {
             return redirect('/')->withErrors('There is no product match.');
         }

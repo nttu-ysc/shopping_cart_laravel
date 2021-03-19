@@ -1,7 +1,10 @@
 @if (Session::has('errors'))
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-    Swal.fire('There is no product match.');
+    errors = <?= json_encode($errors->all()) ?>;
+    errors.forEach(function (error) {
+        Swal.fire(error);
+    });
 </script>
 @endif
 <header class="l-header">

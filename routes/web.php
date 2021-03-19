@@ -25,7 +25,7 @@ Route::get('/products/show/{id}', [ProductController::class, 'showByAdmin']);
 Route::get('/products/search', [ProductController::class, 'search']);
 Route::get('/products/category/{category}', [ProductController::class, 'indexWithCategory']);
 Route::get('/products/tags/{tag}', [ProductController::class, 'indexWithTag']);
-Route::post('/products/price', [ProductController::class, 'priceFilter']);
+Route::any('/products/price', [ProductController::class, 'priceFilter']);
 Route::resource('products', ProductController::class);
 
 Route::get('/carts', [CartController::class, 'index']);
