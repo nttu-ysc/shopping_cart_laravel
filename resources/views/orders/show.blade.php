@@ -25,6 +25,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    @if (!$order->paid)
+                    <div class="toolbox pull-right">
+                        <div class="pay">
+                            <a href="/orders/{{$order->id}}/pay" class="btn btn-danger ">Pay</a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    @endif
                     <div class="table-responsive">
                         <table class="table cart-table">
                             <thead>

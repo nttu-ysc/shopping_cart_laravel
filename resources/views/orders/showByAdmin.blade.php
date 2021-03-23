@@ -77,6 +77,9 @@
 
         <dt class="col-sm-6">Total Price</dt>
         <dd class="col-sm-6">{{$order->totalPrice()}}</dd>
+        @if ($order->paid)
+        <h1 class="paid" style="color:red">Paid</h1>
+        @endif
     </dl>
 </div>
 @endsection
