@@ -74,7 +74,9 @@ class CartController extends Controller
         $this->cart->decreaseByOne($id, $sku);
         $request->session()->put('cart', $this->cart);
         $this->storeToDatabase();
-        $this->deleteToDatabase($id, $sku);
+        if (!isset($this->cart->items[$id][$sku->id]['quantity'])) {
+            $this->deleteToDatabase($id, $sku);
+        }
         return redirect()->action([CartController::class, 'index']);
     }
 
