@@ -37,6 +37,7 @@
         }
     },
     "autoload": {
+        "classmap": ["app/ECPaySDK"],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",

@@ -22,6 +22,7 @@
             <th scope="col">Price</th>
             <th scope="col">Country</th>
             <th scope="col">Address</th>
+            <th scope="col">Paid</th>
             <th scope="col">Action</th>
         </tr>
     </thead>
@@ -34,6 +35,11 @@
             <td>{{$order->totalPrice()}}</td>
             <td>{{$order->country}}</td>
             <td>{{$order->address}}</td>
+            @if ($order->paid)
+            <td>Paid</td>
+            @else
+            <td>Not Paid</td>
+            @endif
             <td>
                 <a href="/orders/{{$order->id}}/showByAdmin" class="btn btn-primary">See More</a>
                 <button class="btn btn-danger" onclick="deleteOrder({{$order->id}})">Delete</button>

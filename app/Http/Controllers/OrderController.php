@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\User;
+use ECPay_AllInOne;
+use ECPay_PaymentMethod;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -82,6 +84,7 @@ class OrderController extends Controller
         $order = new Order;
         $order->email = Auth::user()->email;
         $order->fill($request->all());
+        $order->merchantTradeNo = 'test' . time();
         $order->user_id = Auth::id();
         $order->save();
 
@@ -106,7 +109,64 @@ class OrderController extends Controller
             $item->delete();
         }
         $request->session()->forget('cart');
-        return redirect('/');
+        $request->session()->save();
+        $this->ECPay($order);
+    }
+
+    public function ECPay($order)
+    {
+        try {
+
+            $obj = new ECPay_AllInOne();
+
+            //服務參數
+            $obj->ServiceURL  = "https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5";   //服務位置
+            $obj->HashKey     = '5294y06JbISpM5x9';                                           //測試用Hashkey，請自行帶入ECPay提供的HashKey
+            $obj->HashIV      = 'v77hoKGq4kWxNNIS';                                           //測試用HashIV，請自行帶入ECPay提供的HashIV
+            $obj->MerchantID  = '2000132';                                                     //測試用MerchantID，請自行帶入ECPay提供的MerchantID
+            $obj->EncryptType = '1';                                                           //CheckMacValue加密類型，請固定填入1，使用SHA256加密
+
+
+            //基本參數(請依系統規劃自行調整)
+            $MerchantTradeNo = $order->merchantTradeNo;
+            $obj->Send['ReturnURL']         = "http://0f8ce9e05ef1.ngrok.io/orders/callback";    //付款完成通知回傳的網址
+            $obj->Send['ClientBackURL']         = "http://127.0.0.1:8000/orders/" . $order->id;    //付款完成通知回傳的網址
+            $obj->Send['MerchantTradeNo']   = $MerchantTradeNo;                          //訂單編號
+            $obj->Send['MerchantTradeDate'] = date('Y/m/d H:i:s');                       //交易時間
+            $obj->Send['TotalAmount']       = $order->totalPrice();                                      //交易金額
+            $obj->Send['TradeDesc']         = "good to drink";                          //交易描述
+            $obj->Send['ChoosePayment']     = ECPay_PaymentMethod::Credit;              //付款方式:Credit
+            $obj->Send['IgnorePayment']     = ECPay_PaymentMethod::GooglePay;           //不使用付款方式:GooglePay
+
+            //訂單的商品資料
+            foreach ($order->orderItems as $orderItem) {
+                array_push($obj->Send['Items'], array(
+                    'Name' => $orderItem->productData['name'], 'Price' => (int) $orderItem->discountPrice(),
+                    'Currency' => "元", 'Quantity' => (int) $orderItem->productData['quantity'], 'URL' => "dedwed"
+                ));
+            }
+
+            //產生訂單(auto submit至ECPay)
+            $obj->CheckOut();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function callback(Request $request)
+    {
+        $order = Order::where('merchantTradeNo', $request->MerchantTradeNo)->first();
+        if ($request->RtnCode == 1) {
+            $order->tradeNo = $request->TradeNo;
+            $order->paid = !$order->paid;
+            $order->save();
+        }
+    }
+
+    public function pay($id)
+    {
+        $order = Order::find($id);
+        $this->ECPay($order);
     }
 
     /**
