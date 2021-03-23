@@ -1,7 +1,5 @@
 <?php
 
-namespace App\ECPaySDK;
-
 /**
  * 付款方式。
  */
@@ -672,7 +670,6 @@ class ECPay_Send extends ECPay_Aio
         //宣告付款方式物件
         $PaymentMethod    = 'ECPay_' . $arParameters['ChoosePayment'];
         self::$PaymentObj = new $PaymentMethod;
-
         //檢查參數
         $arParameters = self::$PaymentObj->check_string($arParameters);
 

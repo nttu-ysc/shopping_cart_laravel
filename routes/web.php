@@ -43,6 +43,7 @@ Route::resource('tags', TagController::class)->only('index', 'destroy');
 Route::get('/orders/{id}/showByAdmin', [OrderController::class, 'showByAdmin']);
 Route::get('/orders/admin', [OrderController::class, 'admin']);
 Route::post('/orders/callback', [OrderController::class, 'callback']);
+Route::get('/orders/{id}/pay', [OrderController::class, 'pay']);
 Route::resource('orders', OrderController::class)->except('edit', 'update')->middleware('auth');
 
 Route::get('/dashboard', function () {

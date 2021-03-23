@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\ECPaySDK\ECPay_AllInOne;
-use App\ECPaySDK\ECPay_PaymentMethod;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use ECPay_AllInOne;
+use ECPay_PaymentMethod;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -110,6 +110,11 @@ class OrderController extends Controller
         }
         $request->session()->forget('cart');
         $request->session()->save();
+        $this->ECPay($order);
+    }
+
+    public function ECPay($order)
+    {
         try {
 
             $obj = new ECPay_AllInOne();
@@ -124,7 +129,7 @@ class OrderController extends Controller
 
             //基本參數(請依系統規劃自行調整)
             $MerchantTradeNo = $order->merchantTradeNo;
-            $obj->Send['ReturnURL']         = " http://a087b8e214c2.ngrok.io/orders/callback";    //付款完成通知回傳的網址
+            $obj->Send['ReturnURL']         = "http://0f8ce9e05ef1.ngrok.io/orders/callback";    //付款完成通知回傳的網址
             $obj->Send['ClientBackURL']         = "http://127.0.0.1:8000/orders/" . $order->id;    //付款完成通知回傳的網址
             $obj->Send['MerchantTradeNo']   = $MerchantTradeNo;                          //訂單編號
             $obj->Send['MerchantTradeDate'] = date('Y/m/d H:i:s');                       //交易時間
@@ -156,6 +161,12 @@ class OrderController extends Controller
             $order->paid = !$order->paid;
             $order->save();
         }
+    }
+
+    public function pay($id)
+    {
+        $order = Order::find($id);
+        $this->ECPay($order);
     }
 
     /**
