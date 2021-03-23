@@ -9,7 +9,9 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['firstName', 'lastName', 'email', 'mobile', 'email', 'country', 'address', 'remark'];
+    protected $fillable = [
+        'firstName', 'lastName', 'email', 'mobile', 'email', 'country', 'address', 'remark', 'merchantTradeNo', 'tradeNo', 'paid'
+    ];
 
     public function totalQuantity()
     {
